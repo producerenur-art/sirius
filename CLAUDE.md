@@ -4,8 +4,10 @@ Retningslinjer for arbeid i dette repoet (Sirius – nettradio/streaming-side).
 
 ## Arbeidsflyt
 
-- **Auto-push til `main`:** Når det gjøres endringer på siden eller i koden, skal
-  endringene committes og pushes til `main` automatisk – uten å spørre først.
+- **Auto-commit til `main`:** Når det gjøres endringer på siden eller i koden, skal
+  endringene committes til `main` automatisk – uten å spørre først.
+- Repoet har foreløpig ingen remote (kun lokal `main`). Når en remote settes opp,
+  skal endringene også pushes automatisk.
 - Bruk korte, beskrivende commit-meldinger på norsk.
 
 ## Prosjektstruktur
