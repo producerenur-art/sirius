@@ -22,7 +22,7 @@ window.AI = (function () {
     { k: ['ai', 'assistent', 'hvem er du', 'sirius ai'],
       a: 'Jeg er Sirius-assistenten. Jeg kan alt om siden – spør meg om hvordan du lytter, sjangre, hvordan du blir DJ, programmet eller kontoen din.' },
     { k: ['konto', 'registrer', 'logg inn', 'bruker', 'aktiver'],
-      a: 'Du kan lytte helt uten konto. Vil du lagre favoritter eller spille som DJ, lager du en konto og bekrefter via aktiverings-e-posten vi sender deg.' },
+      a: 'Du kan lytte helt uten konto. Vil du spille som DJ, lager du en konto og bekrefter via aktiverings-e-posten vi sender deg.' },
     { k: ['univers', 'design', 'bakgrunn', 'stjerne'],
       a: 'Sirius er oppkalt etter himmelens klareste stjerne – derfor den svarte universe-bakgrunnen og den blå-hvite gløden. ✦' },
   ];

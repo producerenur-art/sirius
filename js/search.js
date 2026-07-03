@@ -1,7 +1,7 @@
 /* =========================================================================
  * SIRIUS – site-wide søk
  * 🔍-knapp i toppen åpner et søkefelt. Søker i sider/seksjoner, stasjoner,
- * sjangre, DJ-er og podcast-episoder. Aksent-uavhengig. Klikk = naviger.
+ * sjangre og DJ-er. Aksent-uavhengig. Klikk = naviger.
  * ========================================================================= */
 window.Search = (function () {
   const cfg = window.SIRIUS_CONFIG;
@@ -16,8 +16,6 @@ window.Search = (function () {
     const items = [];
     [['Live', 'live nå now playing', '#live'],
      ['Program', 'schedule hvem spiller når who plays', '#program'],
-     ['Podcast', 'opptak episoder episodes recordings', '#podcast'],
-     ['Favoritter', 'favorites favourites likte', '#favorites'],
      ['Bli DJ', 'dj live traktor broadcast gå live', '#dj'],
     ].forEach(([label, kw, sel]) => items.push({ group: 'Sider', label, kw, act: () => scrollTo(sel) }));
 
@@ -32,11 +30,6 @@ window.Search = (function () {
         const key = (sl.name || '').toLowerCase();
         if (sl.name && !seen[key]) { seen[key] = 1; items.push({ group: 'DJ-er', label: sl.name, kw: sl.genre || 'dj', act: () => { location.hash = '#/dj/' + encodeURIComponent(sl.name); close(); } }); }
       });
-    } catch (_) {}
-
-    try {
-      const pods = JSON.parse(localStorage.getItem('sirius_podcasts') || '[]');
-      pods.forEach(p => items.push({ group: 'Podcast', label: p.title, kw: (p.dj || '') + ' ' + (p.desc || ''), act: () => scrollTo('#podcast') }));
     } catch (_) {}
 
     return items;

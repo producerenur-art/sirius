@@ -264,33 +264,10 @@ footer { text-align: center; color: var(--muted); font-size: 13px; padding: 40px
   color: var(--ink); font-size: 18px; width: 42px; height: 42px; border-radius: 12px;
 }
 
-/* ---------- Favoritt-hjerte i spilleren ---------- */
-.pb-fav { background: none; border: none; color: var(--muted); font-size: 21px; line-height: 1; padding: 2px 4px; transition: .15s; }
-.pb-fav.on, .pb-fav:hover { color: var(--live); transform: scale(1.12); }
-
-/* ---------- Favorittliste ---------- */
-.fav-list { display: flex; flex-direction: column; gap: 8px; }
-.fav-list .empty, .dj-list .empty { color: var(--muted); font-size: 14px; padding: 4px 0; }
-.fav-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
-.fav-ic { font-size: 18px; }
-.fav-meta { display: flex; flex-direction: column; min-width: 0; }
-.fav-meta .ttl, .fav-meta .dj-link { font-weight: 600; }
-.fav-meta .sub { color: var(--muted); font-size: 12.5px; }
-.fav-x { background: none; border: none; color: var(--muted); font-size: 18px; }
-.fav-x:hover { color: var(--live); }
+/* ---------- DJ-lenker ---------- */
+.dj-list .empty { color: var(--muted); font-size: 14px; padding: 4px 0; }
 .dj-link { color: var(--ink); border-bottom: 1px dashed var(--line); }
 .dj-link:hover { color: var(--accent); border-color: var(--accent); }
-
-/* ---------- Podcast ---------- */
-.pod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 14px; }
-.pod-card { display: flex; flex-direction: column; gap: 12px; }
-.pod-top { display: flex; gap: 12px; align-items: center; }
-.pod-cover { width: 54px; height: 54px; border-radius: 12px; flex: 0 0 54px; display: grid; place-items: center; font-size: 24px; background: linear-gradient(135deg, var(--accent-2), var(--accent)); color: #06121f; }
-.pod-card h3 { margin: 0; font-size: 16px; }
-.pod-by { color: var(--muted); font-size: 13px; }
-.pod-desc { margin: 0; color: var(--muted); font-size: 14px; }
-.pod-card audio { width: 100%; }
-.pod-noaudio { color: var(--muted); font-size: 13px; padding: 8px 10px; border: 1px dashed var(--line); border-radius: 10px; text-align: center; }
 
 /* ---------- DJ-profil-overlay ---------- */
 .dj-profile { width: min(560px, 100%); position: relative; }
@@ -300,8 +277,7 @@ footer { text-align: center; color: var(--muted); font-size: 13px; padding: 40px
 .dj-hero .kicker { font-size: 11px; letter-spacing: 2px; color: var(--accent); font-weight: 700; }
 .dj-hero h2 { margin: 2px 0; }
 .dj-genre { color: var(--muted); font-size: 14px; }
-.dj-fav.on { color: var(--live); border-color: var(--live); }
-.dj-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.dj-cols { display: grid; grid-template-columns: 1fr; gap: 18px; }
 .dj-cols h4 { margin: 0 0 8px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
 .dj-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
 .dj-list li { padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }

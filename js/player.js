@@ -185,8 +185,6 @@ window.Player = (function () {
           : 'AI roterer musikk døgnet rundt');
     if (els.liveListeners) els.liveListeners.textContent = state.listeners;
     if (els.liveCover) els.liveCover.textContent = state.live ? '🎧' : '✦';
-    // La favoritt-hjertet vite hva som spilles nå
-    window.Favorites && Favorites.onNowPlaying(state);
   }
 
   function escapeHtml(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }

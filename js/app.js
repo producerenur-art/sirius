@@ -24,8 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
   Player.init();
   AI.init();
   Schedule.init();
-  Favorites.init();
-  Podcast.init();
   DJProfile.init();
   Stations.init();
   Search.init();
