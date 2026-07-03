@@ -68,6 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
     mode = b.dataset.mode;
     document.querySelectorAll('[data-mode]').forEach(x => x.classList.toggle('active', x === b));
     document.getElementById('field-name').style.display = mode === 'register' ? 'block' : 'none';
+    // «Glemt passord?» gir bare mening når man logger inn
+    const forgot = document.getElementById('forgot-pass');
+    if (forgot) forgot.style.display = mode === 'login' ? 'block' : 'none';
     updateSubmitLabel();
   }));
   updateSubmitLabel();
@@ -95,15 +98,35 @@ document.addEventListener('DOMContentLoaded', () => {
   if (resendBtn) resendBtn.addEventListener('click', () =>
     Auth.resendActivation(document.getElementById('f-email').value));
 
-  /* ---- Hash-rute for aktivering: #/aktiver/:email/:token ---- */
+  // Glemt passord → send nullstillingslenke til e-posten i skjemaet
+  const forgotBtn = document.getElementById('forgot-pass');
+  if (forgotBtn) forgotBtn.addEventListener('click', () =>
+    Auth.requestPasswordReset(document.getElementById('f-email').value));
+
+  /* ---- Hash-ruter: aktivering + nullstilling av passord ---- */
   function handleHash() {
-    const m = location.hash.match(/^#\/aktiver\/([^/]+)\/([^/]+)/);
-    if (m) {
+    const a = location.hash.match(/^#\/aktiver\/([^/]+)\/([^/]+)/);
+    if (a) {
       try {
-        Auth.activate(decodeURIComponent(m[1]), m[2]);
+        Auth.activate(decodeURIComponent(a[1]), a[2]);
         UI.toast('E-posten er bekreftet! Du kan nå logge inn. ✦', 6000);
       } catch (err) { UI.toast(err.message, 6000); }
       history.replaceState(null, '', location.pathname);
+      return;
+    }
+    const r = location.hash.match(/^#\/nullstill\/([^/]+)\/([^/]+)/);
+    if (r) {
+      const email = decodeURIComponent(r[1]);
+      const pass = prompt(`Sett nytt passord for ${email}:`);
+      history.replaceState(null, '', location.pathname);
+      if (pass == null) return;   // brukeren avbrøt
+      try {
+        Auth.resetPassword(email, r[2], pass);
+        UI.toast('Passordet er oppdatert! Du kan nå logge inn. ✦', 6000);
+        openModal();
+        document.querySelector('[data-mode="login"]').click();
+        document.getElementById('f-email').value = email;
+      } catch (err) { UI.toast(err.message, 6000); }
     }
   }
   addEventListener('hashchange', handleHash);

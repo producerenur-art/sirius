@@ -79,6 +79,55 @@ window.Auth = (function () {
     return u;
   }
 
+  /* ---- Glemt passord: be om nullstilling + sett nytt passord ---- */
+  function requestPasswordReset(email) {
+    email = (email || '').trim().toLowerCase();
+    if (!email) { window.UI && UI.toast('Skriv inn e-posten din først.'); return null; }
+    const all = users();
+    const u = all[email];
+    // Av personvernhensyn later vi som alt gikk bra selv om kontoen ikke finnes.
+    if (!u) { window.UI && UI.toast(`Hvis ${email} har en konto, sender vi en nullstillingslenke ✦`, 7000); return null; }
+    u.resetToken = token();
+    u.resetRequestedAt = Date.now();
+    saveUsers(all);
+    sendResetEmail(u);
+    return u;
+  }
+
+  async function sendResetEmail(user) {
+    const link = `${location.origin}${location.pathname}#/nullstill/${encodeURIComponent(user.email)}/${user.resetToken}`;
+    try {
+      const r = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'reset', to: user.email, name: user.name, link }),
+      });
+      if (r.ok) {
+        window.UI && UI.toast(`Nullstillingslenke sendt til ${user.email} ✦ Sjekk innboksen (og spam).`, 7000);
+        return { sent: true, link };
+      }
+    } catch (_) { /* nettverksfeil → demo-modus */ }
+    console.log('[Sirius] Nullstill-passord-lenke (demo – ekte e-post ikke satt opp):', link);
+    window.UI && UI.toast('E-post ikke satt opp ennå – nullstillingslenken ligger i konsollen (demo-modus).', 7000);
+    return { sent: false, link };
+  }
+
+  function resetPassword(email, tok, newPassword) {
+    email = (email || '').toLowerCase();
+    if (!newPassword) throw new Error('Skriv inn et nytt passord.');
+    if (newPassword.length < 4) throw new Error('Passordet må være minst 4 tegn.');
+    const all = users();
+    const u = all[email];
+    if (!u) throw new Error('Fant ingen konto for denne e-posten.');
+    if (!u.resetToken || u.resetToken !== tok) throw new Error('Ugyldig eller utløpt nullstillingslenke.');
+    u.password = newPassword;
+    u.activated = true;          // klikket lenke beviser e-eierskap → aktiver samtidig
+    delete u.resetToken;
+    delete u.resetRequestedAt;
+    saveUsers(all);
+    return u;
+  }
+
   function login({ email, password }) {
     email = (email || '').trim().toLowerCase();
     const u = users()[email];
@@ -92,5 +141,5 @@ window.Auth = (function () {
   function logout() { setSession(null); }
   function isDJ() { const c = current(); return c && c.role === 'dj'; }
 
-  return { register, login, logout, activate, current, subscribe, isDJ, sendActivationEmail, resendActivation };
+  return { register, login, logout, activate, current, subscribe, isDJ, sendActivationEmail, resendActivation, requestPasswordReset, resetPassword };
 })();
