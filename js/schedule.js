@@ -51,7 +51,7 @@ window.Schedule = (function () {
     el.innerHTML = '';
 
     // Vis en "AI 24/7"-rad først
-    el.appendChild(row({ day: 'Man–Fre', time: '24/7', name: 'Sirius Auto-DJ', genre: 'AI-rotasjon', ai: true }));
+    el.appendChild(row({ day: 'Man–Fre', time: '24/7', name: 'Sirius Radio', genre: 'AI-rotasjon', ai: true }));
 
     list.forEach(s => el.appendChild(row(s)));
   }

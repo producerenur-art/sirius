@@ -15,7 +15,7 @@ window.Player = (function () {
   let wantPlaying = false;      // brukeren VIL lytte → hold sendingen i gang
   let reconnectTimer = null;
   let backoff = 1000;          // økende venting mellom gjenkoblingsforsøk
-  let state = { live: false, title: 'Sirius Auto-DJ', by: 'AI-rotasjon', listeners: 0, cover: '✦' };
+  let state = { live: false, title: 'Sirius Radio', by: 'AI-rotasjon', listeners: 0, cover: '✦' };
 
   const els = {};
   function bind() {
@@ -102,7 +102,7 @@ window.Player = (function () {
     } else {
       localStorage.removeItem('sirius_live_stream');
       const st = readLS('sirius_station');
-      state = { live: false, title: (st && st.name) || 'Sirius Auto-DJ', by: (st && st.genre) || 'AI-rotasjon', listeners: state.listeners || 0, cover: '✦' };
+      state = { live: false, title: (st && st.name) || 'Sirius Radio', by: (st && st.genre) || 'AI-rotasjon', listeners: state.listeners || 0, cover: '✦' };
     }
     retune();
   }
@@ -134,7 +134,7 @@ window.Player = (function () {
         const live = d.live && d.live.is_live;
         state = {
           live: !!live,
-          title: (np.song && (np.song.title || np.song.text)) || 'Sirius Auto-DJ',
+          title: (np.song && (np.song.title || np.song.text)) || 'Sirius Radio',
           by: live ? (d.live.streamer_name || 'Live DJ') : ((np.song && np.song.artist) || 'AI-rotasjon'),
           listeners: (d.listeners && d.listeners.current) || 0,
           cover: '✦',
@@ -175,9 +175,9 @@ window.Player = (function () {
         : `<span class="pb-ai">✦ AI</span> ${escapeHtml(state.by)}`;
     }
     // Live nå-boks
-    const hasSong = !state.live && state.title && state.title !== 'Sirius Auto-DJ';
+    const hasSong = !state.live && state.title && state.title !== 'Sirius Radio';
     if (els.liveKicker) els.liveKicker.textContent = state.live ? 'LIVE NÅ' : 'AI SPILLER NÅ';
-    if (els.liveTitle) els.liveTitle.textContent = state.live ? state.by : 'Sirius Auto-DJ';
+    if (els.liveTitle) els.liveTitle.textContent = state.live ? state.by : 'Sirius Radio';
     if (els.liveSub) els.liveSub.textContent = state.live
       ? state.title
       : (hasSong
