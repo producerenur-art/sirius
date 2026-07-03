@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   DJProfile.init();
   Stations.init();
   Search.init();
+  Chat.init();
 
   /* ---- Auth-knapp i topbar ---- */
   const authBtn = document.getElementById('auth-btn');

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SIRIUS Web Radio – Live fra rommet</title>
-  <meta name="description" content="Sirius Web Radio – gratis internettradio. Live DJ-sett fra Traktor og AI-rotert psychill, progressive, EDM og psytrance – døgnet rundt.">
+  <meta name="description" content="Sirius Web Radio – gratis internettradio. Live DJ-sett fra Traktor og psychill, progressive, EDM og psytrance – døgnet rundt.">
   <link rel="icon" href="assets/logo.svg">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#04060f">
@@ -60,9 +60,9 @@
       <div class="card live-box">
         <div class="live-cover" id="live-cover">✦</div>
         <div class="live-meta">
-          <div class="kicker" id="live-kicker">AI SPILLER NÅ</div>
+          <div class="kicker" id="live-kicker">SPILLER NÅ</div>
           <div class="title" id="live-title">Sirius Radio</div>
-          <div class="sub" id="live-sub">AI roterer musikk døgnet rundt</div>
+          <div class="sub" id="live-sub">Roterer musikk døgnet rundt</div>
         </div>
         <div class="live-stats"><b id="live-listeners">0</b>lyttere</div>
       </div>
@@ -142,7 +142,7 @@
     <button class="pb-play" id="pb-play">▶</button>
     <div class="pb-info">
       <div class="now" id="pb-now">Sirius Radio</div>
-      <div class="by" id="pb-by"><span class="pb-ai">✦ AI</span> AI-rotasjon</div>
+      <div class="by" id="pb-by"><span class="pb-ai">✦</span> Rotasjon</div>
     </div>
     <div class="pb-right">
       <span style="font-size:15px">🔊</span>
@@ -162,6 +162,24 @@
     <div class="ai-input">
       <input class="input" id="ai-input" data-i18n-ph="ai.ph" placeholder="Spør om alt på siden…">
       <button class="btn btn-primary" id="ai-send" data-i18n="ai.send">Send</button>
+    </div>
+  </div>
+
+  <!-- Fellesskaps-chat (åpen for alle – med eller uten konto, flyttbar) -->
+  <button class="chat-fab" id="chat-fab" data-i18n="chat.fab">💬 Chat</button>
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-head" id="chat-head">
+      <div class="t"><span data-i18n="chat.title">💬 Sirius-chat</span> <span class="drag-hint" data-i18n="chat.hint">dra for å flytte</span></div>
+      <button class="x" id="chat-close">×</button>
+    </div>
+    <div class="chat-log" id="chat-log"></div>
+    <div class="chat-name-row">
+      <label data-i18n="chat.you">Du:</label>
+      <input class="input" id="chat-name" data-i18n-ph="chat.name" placeholder="Ditt navn">
+    </div>
+    <div class="chat-input">
+      <input class="input" id="chat-text" data-i18n-ph="chat.ph" placeholder="Skriv en melding…">
+      <button class="btn btn-primary" id="chat-send" data-i18n="chat.send">Send</button>
     </div>
   </div>
 
@@ -206,6 +224,7 @@
   <script src="js/djprofile.js"></script>
   <script src="js/stations.js"></script>
   <script src="js/search.js"></script>
+  <script src="js/chat.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

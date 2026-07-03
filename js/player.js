@@ -15,7 +15,7 @@ window.Player = (function () {
   let wantPlaying = false;      // brukeren VIL lytte → hold sendingen i gang
   let reconnectTimer = null;
   let backoff = 1000;          // økende venting mellom gjenkoblingsforsøk
-  let state = { live: false, title: 'Sirius Radio', by: 'AI-rotasjon', listeners: 0, cover: '✦' };
+  let state = { live: false, title: 'Sirius Radio', by: 'Rotasjon', listeners: 0, cover: '✦' };
 
   const els = {};
   function bind() {
@@ -88,7 +88,7 @@ window.Player = (function () {
   function selectStation(station) {
     if (station && station.url) {
       localStorage.setItem('sirius_station', JSON.stringify(station));
-      state = { live: false, title: station.name || 'Sirius', by: station.genre || 'AI-rotasjon', listeners: state.listeners || 0, cover: '✦' };
+      state = { live: false, title: station.name || 'Sirius', by: station.genre || 'Rotasjon', listeners: state.listeners || 0, cover: '✦' };
     }
     retune();
   }
@@ -102,7 +102,7 @@ window.Player = (function () {
     } else {
       localStorage.removeItem('sirius_live_stream');
       const st = readLS('sirius_station');
-      state = { live: false, title: (st && st.name) || 'Sirius Radio', by: (st && st.genre) || 'AI-rotasjon', listeners: state.listeners || 0, cover: '✦' };
+      state = { live: false, title: (st && st.name) || 'Sirius Radio', by: (st && st.genre) || 'Rotasjon', listeners: state.listeners || 0, cover: '✦' };
     }
     retune();
   }
@@ -135,7 +135,7 @@ window.Player = (function () {
         state = {
           live: !!live,
           title: (np.song && (np.song.title || np.song.text)) || 'Sirius Radio',
-          by: live ? (d.live.streamer_name || 'Live DJ') : ((np.song && np.song.artist) || 'AI-rotasjon'),
+          by: live ? (d.live.streamer_name || 'Live DJ') : ((np.song && np.song.artist) || 'Rotasjon'),
           listeners: (d.listeners && d.listeners.current) || 0,
           cover: '✦',
         };
@@ -155,7 +155,7 @@ window.Player = (function () {
           state = {
             live: false,
             title: song.title,
-            by: song.artist || 'AI-rotasjon',
+            by: song.artist || 'Rotasjon',
             listeners: state.listeners || 0,
             cover: '✦',
           };
@@ -172,17 +172,17 @@ window.Player = (function () {
     if (els.by) {
       els.by.innerHTML = state.live
         ? `<span class="pb-live"><span class="dot"></span>LIVE</span> ${escapeHtml(state.by)}`
-        : `<span class="pb-ai">✦ AI</span> ${escapeHtml(state.by)}`;
+        : `<span class="pb-ai">✦</span> ${escapeHtml(state.by)}`;
     }
     // Live nå-boks
     const hasSong = !state.live && state.title && state.title !== 'Sirius Radio';
-    if (els.liveKicker) els.liveKicker.textContent = state.live ? 'LIVE NÅ' : 'AI SPILLER NÅ';
+    if (els.liveKicker) els.liveKicker.textContent = state.live ? 'LIVE NÅ' : 'SPILLER NÅ';
     if (els.liveTitle) els.liveTitle.textContent = state.live ? state.by : 'Sirius Radio';
     if (els.liveSub) els.liveSub.textContent = state.live
       ? state.title
       : (hasSong
-          ? (state.by && state.by !== 'AI-rotasjon' ? `${state.by} – ${state.title}` : state.title)
-          : 'AI roterer musikk døgnet rundt');
+          ? (state.by && state.by !== 'Rotasjon' ? `${state.by} – ${state.title}` : state.title)
+          : 'Roterer musikk døgnet rundt');
     if (els.liveListeners) els.liveListeners.textContent = state.listeners;
     if (els.liveCover) els.liveCover.textContent = state.live ? '🎧' : '✦';
   }
