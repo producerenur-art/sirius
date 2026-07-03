@@ -6,7 +6,23 @@
  * ========================================================================= */
 window.Schedule = (function () {
   const KEY = 'sirius_schedule';
+  const CLEAN_KEY = 'sirius_schedule_cleaned';
   const DAYS = ['Man', 'Tir', 'Ons', 'Tor', 'Fre', 'Lør', 'Søn'];
+
+  // Éngangs-opprydding: fjern gamle seed-DJ-er som kan ligge igjen i
+  // nettleserens localStorage fra en tidligere versjon. Kjører kun én gang.
+  function cleanupStaleSeed() {
+    if (localStorage.getItem(CLEAN_KEY)) return;
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (raw) {
+        const stale = new Set(['Nova', 'Aether', 'Lyra']);
+        const list = JSON.parse(raw).filter(s => !stale.has(s && s.name));
+        localStorage.setItem(KEY, JSON.stringify(list));
+      }
+    } catch (_) { /* ignorer korrupt data */ }
+    localStorage.setItem(CLEAN_KEY, '1');
+  }
 
   function load() {
     try { return JSON.parse(localStorage.getItem(KEY)) || seed(); }
@@ -58,6 +74,6 @@ window.Schedule = (function () {
 
   function esc(s) { return String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
-  function init() { render(); }
+  function init() { cleanupStaleSeed(); render(); }
   return { init, add, render, all: load, DAYS };
 })();
