@@ -1,0 +1,20 @@
+{
+  "name": "SIRIUS – Live radio fra rommet",
+  "short_name": "Sirius",
+  "description": "Gratis internettradio: live DJ-sett fra Traktor og AI-rotert psychill, progressive, EDM og psytrance – døgnet rundt.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#04060f",
+  "theme_color": "#04060f",
+  "categories": ["music", "entertainment"],
+  "icons": [
+    {
+      "src": "assets/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

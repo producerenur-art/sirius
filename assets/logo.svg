@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="45%" stop-color="#6fd3ff"/>
+      <stop offset="100%" stop-color="#a98bff"/>
+    </radialGradient>
+  </defs>
+  <circle cx="50" cy="50" r="8" fill="url(#g)"/>
+  <!-- fire-punkts stjerneglimt -->
+  <path d="M50 4 L56 44 L50 50 L44 44 Z" fill="url(#g)"/>
+  <path d="M50 96 L56 56 L50 50 L44 56 Z" fill="url(#g)"/>
+  <path d="M4 50 L44 56 L50 50 L44 44 Z" fill="url(#g)"/>
+  <path d="M96 50 L56 56 L50 50 L56 44 Z" fill="url(#g)"/>
+  <!-- diagonale små glimt -->
+  <path d="M22 22 L47 47 L50 50 L44 44 Z" fill="#6fd3ff" opacity="0.6"/>
+  <path d="M78 78 L53 53 L50 50 L56 56 Z" fill="#6fd3ff" opacity="0.6"/>
+  <path d="M78 22 L53 47 L50 50 L56 44 Z" fill="#a98bff" opacity="0.6"/>
+  <path d="M22 78 L47 53 L50 50 L44 56 Z" fill="#a98bff" opacity="0.6"/>
+</svg>
