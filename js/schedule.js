@@ -51,7 +51,7 @@ window.Schedule = (function () {
     el.innerHTML = '';
 
     // Vis en "AI 24/7"-rad først
-    el.appendChild(row({ day: 'Man–Fre', time: '24/7', name: 'Sirius Radio', genre: 'AI-rotasjon', ai: true }));
+    el.appendChild(row({ day: 'Man–Fre', time: '24/7', name: 'Sirius Radio', genre: 'Rotasjon', ai: true }));
 
     list.forEach(s => el.appendChild(row(s)));
   }
@@ -68,7 +68,7 @@ window.Schedule = (function () {
     div.innerHTML = `
       <div class="when">${s.day}<small>${s.time}</small></div>
       <div class="who">${avatar}<div><div class="name">${nameHtml}</div><div class="genre">${esc(s.genre || '')}</div></div></div>
-      <span class="badge ${s.ai ? 'ai' : 'live'}">${s.ai ? '✦ AI' : 'Live DJ'}</span>`;
+      <span class="badge ${s.ai ? 'ai' : 'live'}">${s.ai ? '✦' : 'Live DJ'}</span>`;
     return div;
   }
 

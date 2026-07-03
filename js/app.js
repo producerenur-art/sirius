@@ -236,6 +236,6 @@ function initDJPanel() {
   if (djStop) djStop.addEventListener('click', () => {
     Player.setLocalLive(null);
     window.Stations && Stations.render();
-    UI.toast('Live avsluttet – tilbake til stasjon / AI-rotasjon.');
+    UI.toast('Live avsluttet – tilbake til stasjon / rotasjon.');
   });
 }
