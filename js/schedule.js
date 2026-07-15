@@ -54,6 +54,19 @@ window.Schedule = (function () {
     el.appendChild(row({ day: 'Man–Fre', time: '24/7', name: 'Sirius Radio', genre: 'Rotasjon', ai: true }));
 
     list.forEach(s => el.appendChild(row(s)));
+
+    // Ingen live-sendinger lagt inn ennå → vis en innbydende tomtilstand i
+    // stedet for et nesten tomt felt. Holder samme budskap som hero: DJ-er
+    // tar kontakt på e-post.
+    if (!list.length) {
+      const empty = document.createElement('div');
+      empty.className = 'schedule-empty';
+      empty.style.cssText = 'padding:14px 16px;opacity:.8;border-radius:12px;background:var(--panel-2);margin-top:8px';
+      empty.innerHTML = '<div style="font-weight:600;margin-bottom:2px">Ingen live-sendinger planlagt akkurat nå</div>'
+        + '<div style="font-size:.9em">Sirius spiller døgnet rundt ✦ Vil du spille live? '
+        + '<a class="dj-link" href="mailto:producerenur@gmail.com">Ta kontakt</a></div>';
+      el.appendChild(empty);
+    }
   }
 
   function row(s) {
