@@ -50,9 +50,11 @@ window.Auth = (function () {
         return { sent: true, link };
       }
     } catch (_) { /* nettverksfeil → demo-modus */ }
-    // E-post ikke satt opp (mangler RESEND_API_KEY) → demo: vis lenken i konsollen
+    // E-post ikke satt opp (mangler RESEND_API_KEY) → demo: kopier lenken slik at
+    // brukeren kommer videre uten å måtte åpne utviklerkonsollen.
     console.log('[Sirius] Aktiveringslenke (demo – ekte e-post ikke satt opp):', link);
-    window.UI && UI.toast('E-post ikke satt opp ennå – aktiveringslenken ligger i konsollen (demo-modus).', 7000);
+    try { await navigator.clipboard.writeText(link); } catch (_) {}
+    window.UI && UI.toast('E-post er ikke satt opp ennå. Aktiveringslenken er kopiert – lim den inn i adressefeltet og trykk enter for å aktivere kontoen.', 9000);
     return { sent: false, link };
   }
 
@@ -108,7 +110,8 @@ window.Auth = (function () {
       }
     } catch (_) { /* nettverksfeil → demo-modus */ }
     console.log('[Sirius] Nullstill-passord-lenke (demo – ekte e-post ikke satt opp):', link);
-    window.UI && UI.toast('E-post ikke satt opp ennå – nullstillingslenken ligger i konsollen (demo-modus).', 7000);
+    try { await navigator.clipboard.writeText(link); } catch (_) {}
+    window.UI && UI.toast('E-post er ikke satt opp ennå. Nullstillingslenken er kopiert – lim den inn i adressefeltet og trykk enter.', 9000);
     return { sent: false, link };
   }
 

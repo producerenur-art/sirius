@@ -15,6 +15,9 @@ window.Player = (function () {
   let wantPlaying = false;      // brukeren VIL lytte → hold sendingen i gang
   let reconnectTimer = null;
   let backoff = 1000;          // økende venting mellom gjenkoblingsforsøk
+  let connecting = false;      // forsøker å koble til akkurat nå
+  let failCount = 0;           // mislykkede forsøk på rad
+  let notifiedFail = false;    // har vi allerede varslet om at strømmen svikter
   let state = { live: false, title: 'Sirius Radio', by: 'Rotasjon', listeners: 0, cover: '✦' };
 
   const els = {};
@@ -38,7 +41,7 @@ window.Player = (function () {
       els.vol.value = 85;
       els.vol.addEventListener('input', () => { audio.volume = els.vol.value / 100; });
     }
-    audio.addEventListener('playing', () => { playing = true; backoff = 1000; clearTimeout(reconnectTimer); render(); });
+    audio.addEventListener('playing', () => { playing = true; connecting = false; failCount = 0; notifiedFail = false; backoff = 1000; clearTimeout(reconnectTimer); render(); });
     audio.addEventListener('pause', () => { playing = false; render(); if (wantPlaying) scheduleReconnect(); });
     audio.addEventListener('error', () => { playing = false; render(); scheduleReconnect(); });
     audio.addEventListener('ended', () => scheduleReconnect());
@@ -78,6 +81,7 @@ window.Player = (function () {
     clearTimeout(reconnectTimer);
     const url = currentStreamUrl();
     if (audio.src !== url) audio.src = url;
+    connecting = true; render();
     audio.play().catch(() => scheduleReconnect());
   }
 
@@ -111,6 +115,15 @@ window.Player = (function () {
   // vil lytte, koble til på nytt med økende venting (maks 15 s).
   function scheduleReconnect() {
     if (!wantPlaying) return;
+    connecting = true;
+    failCount++;
+    // Etter noen mislykkede forsøk: si fra én gang at strømmen ikke svarer,
+    // så en ny bruker ikke sitter foran «pause»-ikon og stillhet uten beskjed.
+    if (failCount >= 3 && !notifiedFail) {
+      notifiedFail = true;
+      window.UI && UI.toast('Får ikke kontakt med radiostrømmen – prøver igjen automatisk.', 6000);
+    }
+    render();
     clearTimeout(reconnectTimer);
     reconnectTimer = setTimeout(() => {
       if (!wantPlaying) return;
@@ -166,23 +179,35 @@ window.Player = (function () {
   }
 
   function render() {
+    // Vil lytte, men lyden er ikke i gang → vis tydelig status i stedet for
+    // «pause»-ikon og stillhet uten forklaring.
+    const trying = wantPlaying && !playing;
+    const statusMsg = trying
+      ? (failCount >= 3 ? 'Får ikke kontakt – prøver igjen…' : 'Kobler til…')
+      : null;
     // Player-bar
     if (els.play) els.play.textContent = wantPlaying ? '⏸' : '▶';
     if (els.now) els.now.textContent = state.title;
     if (els.by) {
-      els.by.innerHTML = state.live
-        ? `<span class="pb-live"><span class="dot"></span>LIVE</span> ${escapeHtml(state.by)}`
-        : `<span class="pb-ai">✦</span> ${escapeHtml(state.by)}`;
+      if (statusMsg) {
+        els.by.innerHTML = `<span class="pb-ai">✦</span> ${escapeHtml(statusMsg)}`;
+      } else {
+        els.by.innerHTML = state.live
+          ? `<span class="pb-live"><span class="dot"></span>LIVE</span> ${escapeHtml(state.by)}`
+          : `<span class="pb-ai">✦</span> ${escapeHtml(state.by)}`;
+      }
     }
     // Live nå-boks
     const hasSong = !state.live && state.title && state.title !== 'Sirius Radio';
     if (els.liveKicker) els.liveKicker.textContent = state.live ? 'LIVE NÅ' : 'SPILLER NÅ';
     if (els.liveTitle) els.liveTitle.textContent = state.live ? state.by : 'Sirius Radio';
-    if (els.liveSub) els.liveSub.textContent = state.live
-      ? state.title
-      : (hasSong
-          ? (state.by && state.by !== 'Rotasjon' ? `${state.by} – ${state.title}` : state.title)
-          : 'Roterer musikk døgnet rundt');
+    if (els.liveSub) els.liveSub.textContent = statusMsg
+      ? statusMsg
+      : (state.live
+        ? state.title
+        : (hasSong
+            ? (state.by && state.by !== 'Rotasjon' ? `${state.by} – ${state.title}` : state.title)
+            : 'Roterer musikk døgnet rundt'));
     if (els.liveListeners) els.liveListeners.textContent = state.listeners;
     if (els.liveCover) els.liveCover.textContent = state.live ? '🎧' : '✦';
   }
