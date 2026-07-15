@@ -1,0 +1,21 @@
+SiriusFM – manus for ElevenLabs (engelsk kvinnestemme)
+=======================================================
+
+Lim inn teksten under i ElevenLabs. La linjeskiftene stå – de gir
+naturlige pauser mellom scenene.
+
+-------------------------------------------------------
+SiriusFM. Free radio, always on. Non-stop electronic music — anytime, anywhere, free.
+
+Upload your sound. Share your own tracks and DJ mixes with listeners worldwide.
+
+A living magazine. An AI-powered magazine and radio, refreshed around the clock.
+
+Your frequency awaits. Listen now, at sirius F M dot no.
+-------------------------------------------------------
+
+TIPS:
+- Skriv "sirius F M dot no" (med mellomrom) så leser hun det tydelig.
+- Anbefalte stemmer: Rachel, Jessica, Sarah, Aria eller Matilda.
+- Innstillinger: Stability ~45 %, Similarity ~75 %, Style lav.
+- Last ned som MP3 og legg fila på skrivebordet (f.eks. "stemme.mp3").

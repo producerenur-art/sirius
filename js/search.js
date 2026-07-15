@@ -1,7 +1,7 @@
 /* =========================================================================
  * SIRIUS – site-wide søk
- * 🔍-knapp i toppen åpner et søkefelt. Søker i sider/seksjoner, stasjoner,
- * sjangre og DJ-er. Aksent-uavhengig. Klikk = naviger.
+ * 🔍-knapp i toppen åpner et søkefelt. Søker i sider/seksjoner, stasjoner
+ * og sjangre. Aksent-uavhengig. Klikk = naviger.
  * ========================================================================= */
 window.Search = (function () {
   const cfg = window.SIRIUS_CONFIG;
@@ -14,23 +14,13 @@ window.Search = (function () {
 
   function sources() {
     const items = [];
-    [['Live', 'live nå now playing', '#live'],
-     ['Program', 'schedule hvem spiller når who plays', '#program'],
-     ['Bli DJ', 'dj live traktor broadcast gå live', '#dj'],
+    [['Live', 'live nå now playing radio', '#live'],
     ].forEach(([label, kw, sel]) => items.push({ group: 'Sider', label, kw, act: () => scrollTo(sel) }));
 
     (cfg.stations || []).forEach(s => items.push({
       group: 'Stasjoner', label: s.name, kw: s.genre,
       act: () => { window.Player && Player.selectStation(s); window.Stations && Stations.render(); scrollTo('#live'); },
     }));
-
-    try {
-      const seen = {};
-      (window.Schedule ? Schedule.all() : []).forEach(sl => {
-        const key = (sl.name || '').toLowerCase();
-        if (sl.name && !seen[key]) { seen[key] = 1; items.push({ group: 'DJ-er', label: sl.name, kw: sl.genre || 'dj', act: () => { location.hash = '#/dj/' + encodeURIComponent(sl.name); close(); } }); }
-      });
-    } catch (_) {}
 
     return items;
   }
@@ -64,7 +54,7 @@ window.Search = (function () {
     overlay.className = 'modal-overlay search-overlay';
     overlay.id = 'search-overlay';
     overlay.innerHTML = `<div class="search-panel">
-      <input class="input search-input" id="search-input" type="search" data-i18n-ph="search.ph" placeholder="Søk etter DJ, sjanger, stasjon, episode…" autocomplete="off">
+      <input class="input search-input" id="search-input" type="search" data-i18n-ph="search.ph" placeholder="Søk etter sjanger, stasjon…" autocomplete="off">
       <div class="search-results" id="search-results"></div>
     </div>`;
     document.body.appendChild(overlay);

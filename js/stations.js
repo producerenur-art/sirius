@@ -9,10 +9,8 @@ window.Stations = (function () {
   function esc(s) { return String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
   function activeUrl() {
-    // Live DJ overstyrer; ellers valgt stasjon; ellers default
+    // Valgt stasjon; ellers default
     try {
-      const live = JSON.parse(localStorage.getItem('sirius_live_stream') || 'null');
-      if (live && live.url) return live.url;
       const st = JSON.parse(localStorage.getItem('sirius_station') || 'null');
       if (st && st.url) return st.url;
     } catch (_) {}

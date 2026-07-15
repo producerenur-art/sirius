@@ -1,7 +1,7 @@
 /* SIRIUS – service worker (installerbar PWA)
  * Cache-first for statiske filer; nett for alt annet (aldri cache lyd-strøm
  * eller API). Bump CACHE når du endrer filer. */
-const CACHE = 'sirius-v4';
+const CACHE = 'sirius-v5';
 const ASSETS = [
   './',
   './index.html',
@@ -12,9 +12,7 @@ const ASSETS = [
   './js/starfield.js',
   './js/player.js',
   './js/ai.js',
-  './js/schedule.js',
   './js/auth.js',
-  './js/djprofile.js',
   './js/stations.js',
   './js/search.js',
   './js/app.js',

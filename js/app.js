@@ -1,5 +1,5 @@
 /* =========================================================================
- * SIRIUS – app-glue: UI, meny, modal, DJ «gå live»-panel, oppstart
+ * SIRIUS – app-glue: UI, meny, modal, oppstart
  * ========================================================================= */
 window.UI = (function () {
   let toastEl, toastTimer;
@@ -23,8 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---- Modulene ---- */
   Player.init();
   AI.init();
-  Schedule.init();
-  DJProfile.init();
   Stations.init();
   Search.init();
   Chat.init();
@@ -32,13 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---- Auth-knapp i topbar ---- */
   const authBtn = document.getElementById('auth-btn');
   Auth.subscribe(user => {
-    const isDJ = user && user.role === 'dj';
     if (user) { authBtn.removeAttribute('data-i18n'); authBtn.textContent = `${user.name} ▾`; }
-    else { authBtn.setAttribute('data-i18n', 'nav.authbtn'); authBtn.textContent = window.t ? t('nav.authbtn') : 'Bli DJ / logg inn'; }
-    document.getElementById('dj-locked').style.display = isDJ ? 'none' : 'block';
-    document.getElementById('dj-panel').style.display = isDJ ? 'grid' : 'none';
-    const djLive = document.getElementById('dj-live');
-    if (djLive) djLive.style.display = isDJ ? 'block' : 'none';
+    else { authBtn.setAttribute('data-i18n', 'nav.authbtn'); authBtn.textContent = window.t ? t('nav.authbtn') : 'Logg inn'; }
   });
   authBtn.addEventListener('click', () => {
     if (Auth.current()) {
@@ -49,18 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---- Modal (logg inn / registrer, lytter vs DJ) ---- */
   const overlay = document.getElementById('modal-overlay');
   const form = document.getElementById('auth-form');
-  let mode = 'register', role = 'listener';
+  let mode = 'register';
 
   function openModal() { overlay.classList.add('open'); }
   function closeModal() { overlay.classList.remove('open'); }
   document.getElementById('modal-close').addEventListener('click', closeModal);
   overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
 
-  // Fanevalg: rolle (lytter/DJ) og modus (registrer/logg inn)
-  document.querySelectorAll('[data-role]').forEach(b => b.addEventListener('click', () => {
-    role = b.dataset.role;
-    document.querySelectorAll('[data-role]').forEach(x => x.classList.toggle('active', x === b));
-  }));
+  // Modus: registrer / logg inn
   function updateSubmitLabel() {
     const el = document.getElementById('auth-submit');
     if (el) el.textContent = mode === 'register' ? t('modal.submit') : t('modal.login');
@@ -84,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById('f-pass').value;
     try {
       if (mode === 'register') {
-        Auth.register({ name, email, password, role });
+        Auth.register({ name, email, password });
         UI.toast('Konto opprettet! Bekreft via aktiverings-e-posten for å logge inn.', 6000);
       } else {
         Auth.login({ email, password });
@@ -133,9 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
   addEventListener('hashchange', handleHash);
   handleHash();
 
-  /* ---- DJ «Gå live»-panel: bilde/kamera + sending + program ---- */
-  initDJPanel();
-
   /* ---- Mobilmeny (hamburger) ---- */
   const nav = document.getElementById('nav');
   const navToggle = document.getElementById('nav-toggle');
@@ -158,84 +144,3 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-/* ========================================================================= */
-function initDJPanel() {
-  const drop = document.getElementById('dj-photo');
-  const fileInput = document.getElementById('dj-file');
-  let stream = null, photoData = null;
-
-  document.getElementById('dj-upload').addEventListener('click', () => fileInput.click());
-  fileInput.addEventListener('change', () => {
-    const f = fileInput.files[0];
-    if (!f) return;
-    const rd = new FileReader();
-    rd.onload = () => { photoData = rd.result; drop.innerHTML = `<img src="${photoData}" alt="DJ-bilde">`; };
-    rd.readAsDataURL(f);
-  });
-
-  document.getElementById('dj-camera').addEventListener('click', async () => {
-    try {
-      stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      drop.innerHTML = '';
-      const v = document.createElement('video'); v.autoplay = true; v.playsInline = true; v.srcObject = stream;
-      drop.appendChild(v);
-      document.getElementById('dj-snap').style.display = 'inline-flex';
-    } catch (_) { UI.toast('Fikk ikke tilgang til kamera.'); }
-  });
-
-  document.getElementById('dj-snap').addEventListener('click', () => {
-    const v = drop.querySelector('video');
-    if (!v) return;
-    const c = document.createElement('canvas');
-    c.width = v.videoWidth; c.height = v.videoHeight;
-    c.getContext('2d').drawImage(v, 0, 0);
-    photoData = c.toDataURL('image/jpeg', 0.85);
-    if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-    drop.innerHTML = `<img src="${photoData}" alt="DJ-bilde">`;
-    document.getElementById('dj-snap').style.display = 'none';
-  });
-
-  // Legg til i programmet (hvem spiller live når)
-  const daySel = document.getElementById('dj-day');
-  Schedule.DAYS.forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d; daySel.appendChild(o); });
-
-  document.getElementById('dj-add').addEventListener('click', () => {
-    const user = Auth.current();
-    if (!user) return;
-    const slot = {
-      day: daySel.value,
-      time: document.getElementById('dj-time').value || '20:00',
-      name: document.getElementById('dj-name').value || user.name,
-      genre: 'Live set',
-      avatar: photoData || '',
-    };
-    Schedule.add(slot);
-    UI.toast(`Sending lagt til: ${slot.name} – ${slot.day} ${slot.time} ✦`);
-  });
-
-  document.getElementById('dj-golive').addEventListener('click', () => {
-    UI.toast('For å gå live: koble Traktor til Icecast-serveren (Preferences → Broadcasting). Se README → «Live fra Traktor».', 7000);
-  });
-
-  // Min live-sending: sett/avslutt DJ-ens egen Traktor-strøm
-  const djGo = document.getElementById('dj-live-go');
-  if (djGo) djGo.addEventListener('click', () => {
-    const user = Auth.current(); if (!user) return;
-    const url = document.getElementById('dj-live-url').value.trim();
-    if (!url) { UI.toast('Lim inn din stream-URL først.'); return; }
-    Player.setLocalLive({
-      url,
-      name: document.getElementById('dj-name').value.trim() || user.name,
-      genre: 'Live fra Traktor',
-    });
-    window.Stations && Stations.render();
-    UI.toast('Du er LIVE ✦ Sirius spiller nå din Traktor-sending.', 6000);
-    const live = document.getElementById('live'); if (live) live.scrollIntoView({ behavior: 'smooth' });
-  });
-  const djStop = document.getElementById('dj-live-stop');
-  if (djStop) djStop.addEventListener('click', () => {
-    Player.setLocalLive(null);
-    window.Stations && Stations.render();
-    UI.toast('Live avsluttet – tilbake til stasjon / rotasjon.');
-  });
-}

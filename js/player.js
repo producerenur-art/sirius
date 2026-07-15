@@ -50,7 +50,6 @@ window.Player = (function () {
   // Aktiv strøm: 1) live DJ-overstyring, 2) valgt stasjon, 3) standard fra config
   function readLS(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (_) { return null; } }
   function currentStreamUrl() {
-    const live = readLS('sirius_live_stream'); if (live && live.url) return live.url;
     const st = readLS('sirius_station'); if (st && st.url) return st.url;
     return cfg.streamUrl;
   }
@@ -97,20 +96,6 @@ window.Player = (function () {
     retune();
   }
 
-  // Sett/avslutt en live DJ-sending (Traktor-strøm) lokalt
-  function setLocalLive(info) {
-    if (info && info.url) {
-      localStorage.setItem('sirius_live_stream', JSON.stringify(info));
-      state = { live: true, title: info.name || 'Live DJ', by: info.genre || 'Live fra Traktor', listeners: state.listeners || 0, cover: '🎧' };
-      wantPlaying = true;
-    } else {
-      localStorage.removeItem('sirius_live_stream');
-      const st = readLS('sirius_station');
-      state = { live: false, title: (st && st.name) || 'Sirius Radio', by: (st && st.genre) || 'Rotasjon', listeners: state.listeners || 0, cover: '✦' };
-    }
-    retune();
-  }
-
   // Hold sendingen i gang «hele tiden»: faller strømmen og brukeren fortsatt
   // vil lytte, koble til på nytt med økende venting (maks 15 s).
   function scheduleReconnect() {
@@ -135,9 +120,6 @@ window.Player = (function () {
   }
 
   async function poll() {
-    // Egen live DJ-sending (Traktor): ikke overskriv navnet med låt-metadata
-    if (readLS('sirius_live_stream')) { render(); return; }
-
     // 1) AzuraCast "now playing" (om satt opp i config) – gir låt/DJ/lyttertall
     if (cfg.nowPlayingUrl) {
       try {
@@ -222,5 +204,5 @@ window.Player = (function () {
     // Vaktbikkje: skal vi spille, men strømmen har stoppet → koble til igjen
     setInterval(() => { if (wantPlaying && audio.paused) scheduleReconnect(); }, 20000);
   }
-  return { init, retune, selectStation, setLocalLive, currentStreamUrl };
+  return { init, retune, selectStation, currentStreamUrl };
 })();

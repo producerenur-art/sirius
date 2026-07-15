@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SIRIUS Web Radio – Live fra rommet</title>
-  <meta name="description" content="Sirius Web Radio – gratis internettradio. Live DJ-sett fra Traktor og psychill, progressive, EDM og psytrance – døgnet rundt.">
+  <meta name="description" content="Sirius Web Radio – gratis internettradio. Psychill, progressive, EDM og psytrance – døgnet rundt.">
   <link rel="icon" href="assets/logo.svg">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#04060f">
@@ -23,9 +23,7 @@
   <header class="topbar">
     <button class="nav-toggle" id="nav-toggle" aria-label="Åpne meny">☰</button>
     <nav class="nav" id="nav">
-      <a href="#live" data-i18n="nav.live">Live</a>
-      <a href="#program" data-i18n="nav.program">Program</a>
-      <a href="#dj" data-i18n="nav.dj">Bli DJ</a>
+      <a href="#live" data-i18n="nav.live">Radio</a>
     </nav>
     <div style="display:flex;align-items:center;gap:10px">
       <button class="icon-btn" id="search-btn" aria-label="Søk">🔍</button>
@@ -35,7 +33,7 @@
         <option value="es">🇪🇸 ES</option>
         <option value="de">🇩🇪 DE</option>
       </select>
-      <button class="btn btn-ghost" id="auth-btn" data-i18n="nav.authbtn">Bli DJ / logg inn</button>
+      <button class="btn btn-ghost" id="auth-btn" data-i18n="nav.authbtn">Logg inn</button>
       <div class="logo">
         <img src="assets/logo.svg" class="logo-mark" alt="Sirius Web Radio">
         <div class="logo-text">
@@ -50,13 +48,13 @@
     <!-- Hero -->
     <section class="hero">
       <h1 data-i18n-html="hero.title">Kosmisk radio,<br><span class="glow">døgnet rundt.</span></h1>
-      <p class="lead" data-i18n="hero.lead">Er du lytter, trenger du ikke lage en konto. Er du DJ, ta kontakt med oss på producerenur@gmail.com for live stream på Sirius Radio.</p>
+      <p class="lead" data-i18n="hero.lead">Gratis internettradio – psychill, progressive, EDM og psytrance, døgnet rundt. Du trenger ikke konto for å lytte.</p>
       <button class="btn btn-primary hero-play" id="hero-play"><span class="dot"></span> <span data-i18n="hero.play">Hør Sirius live</span></button>
     </section>
 
     <!-- Live nå-boks (denne + spilleren nederst = "boksen" på hver side) -->
     <section id="live" class="block">
-      <div class="section-head"><h2 data-i18n="live.h">Live nå</h2><span class="hint" data-i18n="live.hint">Koblet mot Traktor-strømmen</span></div>
+      <div class="section-head"><h2 data-i18n="live.h">Live nå</h2><span class="hint" data-i18n="live.hint">Spiller døgnet rundt</span></div>
       <div class="card live-box">
         <div class="live-cover" id="live-cover">✦</div>
         <div class="live-meta">
@@ -68,68 +66,6 @@
       </div>
       <div class="stations-head" data-i18n-html="stations.head">Velg stasjon <span>· bytt sjanger når som helst</span></div>
       <div class="stations" id="stations"></div>
-    </section>
-
-    <!-- Program: hvem spiller live når -->
-    <section id="program" class="block">
-      <div class="section-head"><h2 data-i18n="program.h">Program</h2><span class="hint" data-i18n="program.hint">Hvem spiller live når</span></div>
-      <div class="schedule" id="schedule"></div>
-    </section>
-
-    <!-- Bli DJ / gå live -->
-    <section id="dj" class="block">
-      <div class="section-head"><h2 data-i18n="dj.h">Bli DJ – spill live fra Traktor</h2><span class="hint" data-i18n="dj.hint">Stream · live sett</span></div>
-
-      <div class="card" id="dj-locked">
-        <p style="margin:0 0 14px">Lag en DJ-konto for å låse opp «Gå live».</p>
-        <button class="btn btn-primary" onclick="document.getElementById('auth-btn').click()">Bli DJ</button>
-      </div>
-
-      <div class="card dj-grid" id="dj-panel" style="display:none">
-        <!-- Venstre: bilde/kamera -->
-        <div>
-          <div class="field"><label>Bilde til sendingen (last opp eller ta bilde med kamera)</label>
-            <div class="photo-drop" id="dj-photo">Ingen bilde valgt<br>📷</div>
-          </div>
-          <div class="photo-actions">
-            <button class="btn" id="dj-upload">⬆ Last opp bilde</button>
-            <button class="btn" id="dj-camera">📷 Bruk kamera (PC)</button>
-            <button class="btn btn-primary" id="dj-snap" style="display:none">Ta bildet</button>
-          </div>
-          <input type="file" id="dj-file" accept="image/*" hidden>
-        </div>
-
-        <!-- Høyre: sending + program -->
-        <div>
-          <div class="field"><label>Artistnavn / DJ-navn</label><input class="input" id="dj-name" placeholder="f.eks. Nova"></div>
-          <div class="field" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div><label>Dag</label><select class="input" id="dj-day"></select></div>
-            <div><label>Tid</label><input class="input" id="dj-time" type="time" value="21:00"></div>
-          </div>
-          <div class="photo-actions">
-            <button class="btn" id="dj-add">+ Legg i programmet</button>
-            <button class="btn btn-primary" id="dj-golive">🔴 Gå live med Traktor</button>
-          </div>
-          <p class="note" style="text-align:left">Live-lyden sendes via Icecast. Se README → «Live fra Traktor» for hvordan du kobler Traktor på.</p>
-        </div>
-      </div>
-
-      <!-- Min live-sending: DJ kobler egen Traktor-strøm rett inn -->
-      <div class="card dj-live" id="dj-live" style="display:none">
-        <div class="section-head" style="margin-bottom:12px"><h2 style="font-size:18px">🔴 Gå live med Traktor</h2><span class="hint">Din egen direkte-sending</span></div>
-        <ol class="dj-live-steps">
-          <li>Sett opp en Icecast/AzuraCast-server (se <a href="docs/AZURACAST-TRAKTOR.md" target="_blank">guiden</a>).</li>
-          <li>Traktor → <b>Preferences → Broadcasting</b>: fyll inn server, port, mount og passord.</li>
-          <li>Lim inn din offentlige stream-URL under og trykk «Sett meg LIVE».</li>
-        </ol>
-        <div class="field"><label>Min stream-URL (Icecast-mount Traktor sender til)</label>
-          <input class="input" id="dj-live-url" placeholder="https://din-server.no/listen/dittnavn/radio.mp3"></div>
-        <div class="photo-actions">
-          <button class="btn btn-primary" id="dj-live-go">🔴 Sett meg LIVE nå</button>
-          <button class="btn" id="dj-live-stop">⬛ Avslutt live</button>
-        </div>
-        <p class="note" style="text-align:left">Når du er live spiller hele Sirius din Traktor-sending, og «Live nå» viser navnet ditt. For at ALLE lyttere skal høre deg på tvers av enheter må stream-URL-en være offentlig – det er akkurat det AzuraCast-serveren gir deg (den bytter automatisk til deg når Traktor kringkaster).</p>
-      </div>
     </section>
   </main>
 
@@ -188,19 +124,15 @@
     <div class="card modal" style="position:relative">
       <button class="x" id="modal-close">×</button>
       <h3 data-i18n="modal.title">Bli med på Sirius</h3>
-      <div class="sub" data-i18n="modal.sub">Du trenger ikke konto for å lytte – bare for å spille som DJ.</div>
+      <div class="sub" data-i18n="modal.sub">Du trenger ikke konto for å lytte – opprett en for å bli med i fellesskapet.</div>
 
-      <div class="tabs">
-        <button data-role="listener" class="active" data-i18n="modal.listener">🎧 Lytter</button>
-        <button data-role="dj" data-i18n="modal.dj">🎛 DJ</button>
-      </div>
       <div class="tabs">
         <button data-mode="register" class="active" data-i18n="modal.register">Registrer</button>
         <button data-mode="login" data-i18n="modal.login">Logg inn</button>
       </div>
 
       <form id="auth-form">
-        <div class="field" id="field-name"><label data-i18n="modal.name">Navn / DJ-navn</label><input class="input" id="f-name" placeholder="Ditt navn"></div>
+        <div class="field" id="field-name"><label data-i18n="modal.name">Navn</label><input class="input" id="f-name" placeholder="Ditt navn"></div>
         <div class="field"><label data-i18n="modal.email">E-post</label><input class="input" id="f-email" type="email" placeholder="deg@epost.no" required></div>
         <div class="field"><label data-i18n="modal.pass">Passord</label><input class="input" id="f-pass" type="password" placeholder="••••••••" required></div>
         <button class="btn btn-primary" id="auth-submit" style="width:100%" type="submit">Opprett konto</button>
@@ -219,9 +151,7 @@
   <script src="js/starfield.js"></script>
   <script src="js/player.js"></script>
   <script src="js/ai.js"></script>
-  <script src="js/schedule.js"></script>
   <script src="js/auth.js"></script>
-  <script src="js/djprofile.js"></script>
   <script src="js/stations.js"></script>
   <script src="js/search.js"></script>
   <script src="js/chat.js"></script>

@@ -15,14 +15,14 @@ window.AI = (function () {
       a: 'Sirius er 100 % gratis. Du trenger heller ikke konto for å lytte eller bruke chatten/assistenten.' },
     { k: ['sjanger', 'musikk', 'hva spiller', 'genre', 'stil'],
       a: 'Sirius spiller psychill, progressive, EDM og psytrance – kosmisk elektronika døgnet rundt.' },
-    { k: ['dj', 'spille live', 'bli dj', 'streame', 'traktor', 'native instruments'],
-      a: 'Vil du spille live? Lag en DJ-konto (knappen «Bli DJ / logg inn»), bekreft e-posten din, og du får en «Gå live»-fane på profilen. Der kobler du Traktor til via Icecast og overtar sendingen automatisk. Se «Bli DJ»-seksjonen for oppsett.' },
-    { k: ['når spiller', 'program', 'timeplan', 'hvem spiller', 'sending'],
-      a: 'Se «Program»-seksjonen – der står det hvem som spiller live når. Utenom oppsatte tider roterer musikken 24/7, mandag til fredag.' },
+    { k: ['stasjon', 'bytt', 'kanal', 'velg', 'flere kanaler'],
+      a: 'Under «Velg stasjon» kan du bytte mellom flere kanaler – psychill, ambient, progressive, EDM og psytrance. Klikk en stasjon, så bytter lyden med en gang.' },
+    { k: ['når spiller', 'timeplan', 'døgnet', '24/7', 'alltid', 'hele tiden'],
+      a: 'Sirius spiller døgnet rundt – kosmisk elektronika non-stop. Bare trykk ▶, så er du med.' },
     { k: ['ai', 'assistent', 'hvem er du', 'sirius ai'],
-      a: 'Jeg er Sirius-assistenten. Jeg kan alt om siden – spør meg om hvordan du lytter, sjangre, hvordan du blir DJ, programmet eller kontoen din.' },
+      a: 'Jeg er Sirius-assistenten. Jeg kan alt om siden – spør meg om hvordan du lytter, sjangre, stasjonene eller kontoen din.' },
     { k: ['konto', 'registrer', 'logg inn', 'bruker', 'aktiver'],
-      a: 'Du kan lytte helt uten konto. Vil du spille som DJ, lager du en konto og bekrefter via aktiverings-e-posten vi sender deg.' },
+      a: 'Du kan lytte helt uten konto. Vil du bli med i fellesskapet, lager du en konto og bekrefter via aktiverings-e-posten vi sender deg.' },
     { k: ['univers', 'design', 'bakgrunn', 'stjerne'],
       a: 'Sirius er oppkalt etter himmelens klareste stjerne – derfor den svarte universe-bakgrunnen og den blå-hvite gløden. ✦' },
   ];
@@ -36,7 +36,7 @@ window.AI = (function () {
       if (score > bestScore) { bestScore = score; best = item; }
     }
     if (best) return best.a;
-    return 'Godt spørsmål! Jeg vet mest om hvordan du lytter, sjangrene våre, hvordan du blir DJ og programmet. Prøv å spørre om noe av det – eller trykk ▶ for å bare høre Sirius. ✦';
+    return 'Godt spørsmål! Jeg vet mest om hvordan du lytter, sjangrene våre og stasjonene. Prøv å spørre om noe av det – eller trykk ▶ for å bare høre Sirius. ✦';
   }
 
   async function ask(q) {

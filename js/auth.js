@@ -6,8 +6,8 @@
  * For ekte kontoer + ekte e-post kobles dette mot en backend (Supabase/
  * serverless + en mailer som Resend). Se README.md → «Kontoer & e-post».
  *
- * Roller: 'listener' (lytter) og 'dj'. DJ-rollen låser opp «Gå live»-fanen.
- * Man trenger IKKE konto for å lytte eller bruke AI-assistenten.
+ * Kontoene er lytter-kontoer. Man trenger IKKE konto for å lytte eller bruke
+ * AI-assistenten – kun for å bli med i fellesskapet.
  * ========================================================================= */
 window.Auth = (function () {
   const UKEY = 'sirius_users';

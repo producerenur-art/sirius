@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SiriusFM — Reels Studio</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:#05060a;overflow:hidden;color:#e8ecf2;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif}
+  body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:14px}
+  #wrap{position:relative;height:calc(100vh - 90px);aspect-ratio:9/16;
+    border-radius:14px;overflow:hidden;box-shadow:0 0 80px rgba(34,197,94,.2)}
+  #out{width:100%;height:100%;display:block}
+  #glcv{display:none}
+  .bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+  button{font:inherit;font-weight:800;letter-spacing:.02em;border:0;cursor:pointer;
+    padding:12px 20px;border-radius:999px;color:#03130a;
+    background:linear-gradient(90deg,#86efac,#22c55e 55%,#ec4899);background-size:180% 100%;
+    box-shadow:0 8px 30px rgba(34,197,94,.4);transition:transform .15s,filter .15s}
+  button:hover{filter:brightness(1.06)}
+  button:active{transform:scale(.97)}
+  button.ghost{background:#141824;color:#cdd6e4;box-shadow:none;border:1px solid #2a3142}
+  button:disabled{opacity:.5;cursor:default;filter:none}
+  #status{font-size:13px;color:#8b95a7;min-height:16px;text-align:center;letter-spacing:.02em}
+  a.link{color:#86efac}
+</style>
+</head>
+<body>
+  <div id="wrap">
+    <canvas id="out" width="1080" height="1920"></canvas>
+    <canvas id="glcv" width="1080" height="1920"></canvas>
+  </div>
+
+  <div class="bar">
+    <button id="rec">&#11015; Lag video (MP4, uten lyd)</button>
+    <button id="recAudio" class="ghost">&#127897; Ta opp MED lyd</button>
+    <button id="sound" class="ghost">&#128266; Spill psytrance (forh&aring;ndsvis)</button>
+  </div>
+  <div id="status">Klar. Trykk &laquo;Lag video&raquo; &ndash; den tar opp én loop (~21 sek) og laster ned fila.</div>
+
+  <audio id="bg" loop preload="auto">
+    <source src="https://ice2.somafm.com/suburbsofgoa-128-mp3" type="audio/mpeg">
+  </audio>
+
+<script>
+/* =================== Psychedelic WebGL background =================== */
+const glcv = document.getElementById('glcv');
+const gl = glcv.getContext('webgl') || glcv.getContext('experimental-webgl');
+const vsrc = `attribute vec2 p; void main(){ gl_Position = vec4(p,0.,1.); }`;
+const fsrc = `
+precision highp float;
+uniform vec2 res; uniform float t;
+vec3 pal(float x){
+  vec3 a=vec3(0.55,0.45,0.55), b=vec3(0.45,0.5,0.5);
+  vec3 c=vec3(1.0,1.0,1.0), d=vec3(0.15,0.45,0.85);
+  return a + b*cos(6.28318*(c*x+d));
+}
+mat2 rot(float a){ float s=sin(a),c=cos(a); return mat2(c,-s,s,c); }
+void main(){
+  vec2 uv = (gl_FragCoord.xy - 0.5*res)/res.y;
+  float time = t*0.14;
+  float a = atan(uv.y,uv.x); float r = length(uv);
+  float seg = 6.0; a = mod(a, 6.28318/seg); a = abs(a - 3.14159/seg);
+  uv = vec2(cos(a),sin(a))*r;
+  vec2 q = uv*2.2;
+  for(int i=0;i<5;i++){
+    q += 0.42*vec2(sin(1.3*q.y + time*1.7 + float(i)*1.1),
+                   cos(1.3*q.x - time*1.4 + float(i)*0.7));
+    q *= rot(0.18 + time*0.05);
+  }
+  float v = length(q)*0.5;
+  float glow = 0.55/(0.15 + abs(0.7 - r*1.4));
+  vec3 col = pal(v*0.35 + time*0.25 + r*0.4);
+  col = mix(col, vec3(0.13,0.85,0.42), 0.22*smoothstep(0.2,0.9,sin(v*3.0+time)));
+  col = mix(col, vec3(0.92,0.28,0.6), 0.18*smoothstep(0.2,0.9,cos(v*2.0-time*1.3)));
+  col += glow*vec3(0.15,0.35,0.28);
+  col *= 1.0 - 0.55*smoothstep(0.55,1.15,r);
+  col = pow(col, vec3(0.85));
+  gl_FragColor = vec4(col,1.0);
+}`;
+function compile(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+let uRes,uT;
+if(gl){
+  const prog=gl.createProgram();
+  gl.attachShader(prog,compile(gl.VERTEX_SHADER,vsrc));
+  gl.attachShader(prog,compile(gl.FRAGMENT_SHADER,fsrc));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(prog,'p'); gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  uRes=gl.getUniformLocation(prog,'res'); uT=gl.getUniformLocation(prog,'t');
+  gl.viewport(0,0,1080,1920);
+}
+
+/* =================== Composite (bg + text) onto #out =================== */
+const out = document.getElementById('out');
+const ctx = out.getContext('2d');
+const W=1080, H=1920;
+
+const SCENE_MS = 5200;
+const SCENES = [
+  { kicker:'24 / 7  ·  NO SIGNUP', l1:'Free radio,', l2:'always on.',
+    sub:'Tune into non-stop electronic music — anytime, anywhere, free.' },
+  { kicker:'FOR CREATORS', l1:'Upload', l2:'your sound.',
+    sub:'Share your own tracks & DJ mixes with listeners worldwide.' },
+  { kicker:'POWERED BY AI', l1:'A living', l2:'magazine.',
+    sub:'An AI magazine & radio that refresh around the clock.' },
+  { kicker:'', l1:'Your frequency', l2:'awaits.', sub:'' },
+];
+const LOOP_MS = SCENE_MS * SCENES.length;
+
+function accentGrad(x0,x1,y){
+  const g=ctx.createLinearGradient(x0,y,x1,y);
+  g.addColorStop(0,'#22c55e'); g.addColorStop(.5,'#ec4899'); g.addColorStop(1,'#f59e0b');
+  return g;
+}
+function env(p){ const IN=0.12,OUT=0.86;
+  let a = p<IN ? p/IN : p>OUT ? 1-(p-OUT)/(1-OUT) : 1;
+  return Math.max(0,Math.min(1,a)); }
+function wrap(text,maxW){
+  const words=text.split(' '); const lines=[]; let cur='';
+  for(const w of words){ const test=cur?cur+' '+w:w;
+    if(ctx.measureText(test).width>maxW && cur){lines.push(cur);cur=w;} else cur=test; }
+  if(cur)lines.push(cur); return lines;
+}
+function centerText(str,y){ ctx.fillText(str, W/2, y); }
+
+function draw(t){
+  // background
+  if(gl){ gl.uniform2f(uRes,W,H); gl.uniform1f(uT,t/1000); gl.drawArrays(gl.TRIANGLES,0,3);
+          ctx.drawImage(glcv,0,0,W,H); }
+  else { ctx.fillStyle='#0b0e18'; ctx.fillRect(0,0,W,H); }
+  // dark vignette for legibility
+  const vg=ctx.createRadialGradient(W/2,H*0.46,200,W/2,H*0.5,1100);
+  vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(0,0,0,0.5)');
+  ctx.fillStyle=vg; ctx.fillRect(0,0,W,H);
+
+  ctx.textBaseline='alphabetic';
+
+  /* ---- brand top ("Sirius" white + "FM" gradient, side by side) ---- */
+  ctx.save();
+  ctx.textAlign='left';
+  ctx.font='900 66px -apple-system,Inter,Arial'; ctx.letterSpacing='8px';
+  const bs1='Sirius', bs2='FM', by=190;
+  const bw1=ctx.measureText(bs1).width, bw2=ctx.measureText(bs2).width;
+  const bx0=(W-(bw1+bw2))/2;
+  ctx.shadowColor='rgba(34,197,94,.9)'; ctx.shadowBlur=30;
+  ctx.fillStyle='#ffffff'; ctx.fillText(bs1, bx0, by);
+  ctx.fillStyle=accentGrad(bx0+bw1, bx0+bw1+bw2, by); ctx.fillText(bs2, bx0+bw1, by);
+  ctx.restore();
+  ctx.textAlign='center';
+  ctx.save(); ctx.font='600 24px -apple-system,Inter,Arial'; ctx.letterSpacing='10px';
+  ctx.fillStyle='rgba(255,255,255,.72)';
+  centerText('ELECTRONIC MUSIC · RADIO · MIXES', 240); ctx.restore();
+
+  /* ---- progress dots ---- */
+  const sceneIdx = Math.min(SCENES.length-1, Math.max(0, Math.floor(((t % LOOP_MS)+LOOP_MS)%LOOP_MS / SCENE_MS)));
+  const activeDot = Math.min(sceneIdx,2);
+  const dotW=44, gap=14, total=3*dotW+2*gap; let dx=(W-total)/2;
+  for(let i=0;i<3;i++){ ctx.fillStyle = i===activeDot ? '#ec4899' : 'rgba(255,255,255,.25)';
+    ctx.beginPath(); ctx.roundRect(dx,300,dotW,7,4); ctx.fill(); dx+=dotW+gap; }
+
+  /* ---- center scene ---- */
+  const s = SCENES[sceneIdx];
+  const p = (t % SCENE_MS)/SCENE_MS;
+  const a = env(p);
+  const yoff = (1-a)*26;
+  ctx.save(); ctx.globalAlpha = a;
+  const cy = 900 + yoff;
+  if(s.kicker){ ctx.font='700 30px -apple-system,Inter,Arial'; ctx.letterSpacing='10px';
+    ctx.fillStyle='#86efac'; ctx.shadowColor='rgba(34,197,94,.8)'; ctx.shadowBlur=18;
+    centerText(s.kicker, cy-150); ctx.shadowBlur=0; }
+  ctx.letterSpacing='0px';
+  ctx.font='900 96px -apple-system,Inter,Arial';
+  ctx.fillStyle='#ffffff'; ctx.shadowColor='rgba(0,0,0,.55)'; ctx.shadowBlur=22;
+  centerText(s.l1, cy-20);
+  // accent second line
+  const w2=ctx.measureText(s.l2).width;
+  ctx.fillStyle=accentGrad(W/2-w2/2, W/2+w2/2, cy+88);
+  ctx.shadowColor='rgba(236,72,153,.5)';
+  centerText(s.l2, cy+90);
+  ctx.shadowBlur=0;
+  if(s.sub){ ctx.font='400 40px -apple-system,Inter,Arial'; ctx.fillStyle='rgba(255,255,255,.92)';
+    ctx.shadowColor='rgba(0,0,0,.7)'; ctx.shadowBlur=14;
+    const lines=wrap(s.sub, 840); let ly=cy+200;
+    for(const ln of lines){ centerText(ln, ly); ly+=52; } ctx.shadowBlur=0; }
+  ctx.restore();
+
+  /* ---- CTA (always visible) ---- */
+  ctx.save();
+  ctx.font='700 30px -apple-system,Inter,Arial'; ctx.letterSpacing='8px';
+  ctx.fillStyle='rgba(255,255,255,.9)'; centerText('LISTEN NOW', 1640);
+  // pill
+  ctx.letterSpacing='0px'; ctx.font='900 54px -apple-system,Inter,Arial';
+  const label='www.siriusfm.no  →';
+  const tw=ctx.measureText(label).width; const padX=54, ph=104;
+  const pw=tw+padX*2; const px=(W-pw)/2, py=1690;
+  const pulse=1+0.03*Math.sin(t/300);
+  ctx.translate(W/2,py+ph/2); ctx.scale(pulse,pulse); ctx.translate(-W/2,-(py+ph/2));
+  const pg=ctx.createLinearGradient(px,0,px+pw,0);
+  pg.addColorStop(0,'#86efac'); pg.addColorStop(.5,'#22c55e'); pg.addColorStop(1,'#ec4899');
+  ctx.fillStyle=pg; ctx.shadowColor='rgba(34,197,94,.55)'; ctx.shadowBlur=40;
+  ctx.beginPath(); ctx.roundRect(px,py,pw,ph,ph/2); ctx.fill(); ctx.shadowBlur=0;
+  ctx.fillStyle='#03130a'; ctx.textBaseline='middle';
+  ctx.fillText(label, W/2, py+ph/2+3);
+  ctx.restore();
+}
+
+const start=performance.now();
+function frame(now){ draw(now-start); requestAnimationFrame(frame); }
+requestAnimationFrame(frame);
+
+/* =================== Audio preview (psytrance) =================== */
+const bg=document.getElementById('bg');
+const soundBtn=document.getElementById('sound');
+soundBtn.onclick=()=>{
+  if(bg.paused){ bg.volume=0.16; bg.play().then(()=>soundBtn.textContent='🔇 Stopp lyd')
+    .catch(()=>setStatus('Kunne ikke spille streamen (nett/ad-blocker).')); }
+  else { bg.pause(); soundBtn.textContent='🔊 Spill psytrance (forhåndsvis)'; }
+};
+
+/* =================== Recording =================== */
+const status=document.getElementById('status');
+const recBtn=document.getElementById('rec');
+const recABtn=document.getElementById('recAudio');
+function setStatus(m){ status.textContent=m; }
+function pickMime(prefMp4){
+  const list = prefMp4
+    ? ['video/mp4;codecs=avc1.640028','video/mp4;codecs=avc1.42E01E','video/mp4','video/webm;codecs=vp9','video/webm']
+    : ['video/webm;codecs=vp9','video/webm','video/mp4'];
+  return list.find(t=>MediaRecorder.isTypeSupported(t)) || '';
+}
+function download(blob, ext){
+  const url=URL.createObjectURL(blob); const a=document.createElement('a');
+  a.href=url; a.download='SiriusFM-reels.'+ext; a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 4000);
+}
+function recordStream(stream, mime, secs, done){
+  const rec=new MediaRecorder(stream,{mimeType:mime, videoBitsPerSecond:12_000_000});
+  const chunks=[]; rec.ondataavailable=e=>{ if(e.data.size)chunks.push(e.data); };
+  rec.onstop=()=>{ const blob=new Blob(chunks,{type:mime}); const ext=mime.includes('mp4')?'mp4':'webm';
+    if(ext==='webm') setStatus('Lastet ned WEBM (Chrome støtter ikke MP4-opptak her). Instagram/TikTok tar webm, ellers si ifra så konverterer vi.');
+    else setStatus('Ferdig! MP4 lastet ned ✓ Legg til musikk i reels-appen.');
+    done && done(); download(blob, ext); };
+  const t0=performance.now();
+  rec.start(200);
+  const tick=setInterval(()=>{ const left=Math.max(0,secs-(performance.now()-t0)/1000);
+    setStatus('Tar opp… '+left.toFixed(1)+' sek igjen'); }, 200);
+  setTimeout(()=>{ clearInterval(tick); rec.stop();
+    stream.getTracks().forEach(tr=>{ if(tr.kind!=='audio'||stream===canvasStream) {} }); }, secs*1000);
+}
+let canvasStream=null;
+
+// Knapp 1: ren video fra canvas (uten lyd)
+recBtn.onclick=()=>{
+  const mime=pickMime(true);
+  if(!mime){ setStatus('Nettleseren støtter ikke opptak. Bruk Chrome.'); return; }
+  recBtn.disabled=recABtn.disabled=true;
+  canvasStream=out.captureStream(30);
+  setStatus('Tar opp én loop…');
+  recordStream(canvasStream, mime, LOOP_MS/1000, ()=>{ recBtn.disabled=recABtn.disabled=false; });
+};
+
+// Knapp 2: skjermopptak MED lyd (velg denne fanen + del fanelyd)
+recABtn.onclick=async()=>{
+  if(!navigator.mediaDevices?.getDisplayMedia){ setStatus('Skjermopptak ikke støttet her.'); return; }
+  if(bg.paused){ bg.volume=0.16; try{ await bg.play(); }catch(e){} soundBtn.textContent='🔇 Stopp lyd'; }
+  setStatus('Velg «Chrome-fane» → DENNE fanen, og huk av «Del fanelyd».');
+  let disp;
+  try{ disp=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:30}, audio:true}); }
+  catch(e){ setStatus('Avbrutt.'); return; }
+  const mime=pickMime(true);
+  recBtn.disabled=recABtn.disabled=true;
+  recordStream(disp, mime, LOOP_MS/1000, ()=>{ recBtn.disabled=recABtn.disabled=false;
+    disp.getTracks().forEach(t=>t.stop()); });
+};
+</script>
+</body>
+</html>
