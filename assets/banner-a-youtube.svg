@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 1440" width="2560" height="1440" role="img" aria-label="Sirius FM – Nova">
+  <defs>
+  <radialGradient id="g-bg" cx="50%" cy="42%" r="78%">
+    <stop offset="0%" stop-color="#132347"></stop>
+    <stop offset="55%" stop-color="#070c1d"></stop>
+    <stop offset="100%" stop-color="#04060f"></stop>
+  </radialGradient>
+  <radialGradient id="g-core" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#ffffff"></stop><stop offset="38%" stop-color="#bfeaff"></stop>
+    <stop offset="72%" stop-color="#6fd3ff"></stop><stop offset="100%" stop-color="#a98bff"></stop>
+  </radialGradient>
+  <radialGradient id="g-glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#6fd3ff" stop-opacity=".5"></stop>
+    <stop offset="45%" stop-color="#a98bff" stop-opacity=".16"></stop>
+    <stop offset="100%" stop-color="#a98bff" stop-opacity="0"></stop>
+  </radialGradient>
+  <radialGradient id="g-halo" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#3f6bd6" stop-opacity=".38"></stop>
+    <stop offset="60%" stop-color="#2a3f8f" stop-opacity=".10"></stop>
+    <stop offset="100%" stop-color="#04060f" stop-opacity="0"></stop>
+  </radialGradient>
+  <linearGradient id="g-ring" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#6fd3ff" stop-opacity=".9"></stop>
+    <stop offset="55%" stop-color="#a98bff" stop-opacity=".45"></stop>
+    <stop offset="100%" stop-color="#6fd3ff" stop-opacity="0"></stop>
+  </linearGradient>
+  <linearGradient id="g-ring2" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#6fd3ff"></stop><stop offset="100%" stop-color="#a98bff"></stop>
+  </linearGradient>
+  <linearGradient id="g-star" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#ffffff"></stop><stop offset="50%" stop-color="#6fd3ff"></stop>
+    <stop offset="100%" stop-color="#a98bff"></stop>
+  </linearGradient>
+  <linearGradient id="g-bars" x1="0" y1="1" x2="1" y2="0">
+    <stop offset="0%" stop-color="#a98bff"></stop><stop offset="50%" stop-color="#6fd3ff"></stop>
+    <stop offset="100%" stop-color="#ffffff"></stop>
+  </linearGradient>
+  <linearGradient id="g-word" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#ffffff"></stop><stop offset="58%" stop-color="#6fd3ff"></stop>
+    <stop offset="100%" stop-color="#a98bff"></stop>
+  </linearGradient>
+  <linearGradient id="g-line" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#6fd3ff" stop-opacity="0"></stop>
+    <stop offset="50%" stop-color="#6fd3ff" stop-opacity=".55"></stop>
+    <stop offset="100%" stop-color="#a98bff" stop-opacity="0"></stop>
+  </linearGradient>
+</defs>
+  <rect width="2560" height="1440" fill="url(#g-bg)"></rect>
+  <ellipse cx="1280.0" cy="720" rx="1075" ry="792" fill="url(#g-halo)"></ellipse>
+  <g fill="#eaf2ff"><circle cx="154" cy="259" r="2.6" opacity="0.5"></circle><circle cx="333" cy="893" r="2.0" opacity="0.35"></circle><circle cx="512" cy="403" r="1.8" opacity="0.3"></circle><circle cx="691" cy="1181" r="2.4" opacity="0.4"></circle><circle cx="870" cy="173" r="1.8" opacity="0.3"></circle><circle cx="1050" cy="1008" r="2.0" opacity="0.32"></circle><circle cx="1485" cy="288" r="2.2" opacity="0.38"></circle><circle cx="1690" cy="1123" r="1.8" opacity="0.3"></circle><circle cx="1894" cy="490" r="2.6" opacity="0.45"></circle><circle cx="2074" cy="950" r="2.0" opacity="0.35"></circle><circle cx="2253" cy="317" r="1.8" opacity="0.3"></circle><circle cx="2406" cy="1066" r="2.4" opacity="0.4"></circle><circle cx="1229" cy="1296" r="1.8" opacity="0.28"></circle><circle cx="1331" cy="86" r="1.8" opacity="0.28"></circle></g>
+  <rect x="307" y="1217" width="1946" height="2" fill="url(#g-line)" opacity=".5"></rect>
+  <g id="lockup" transform="translate(1297.53 724.08) scale(1.2966)">
+  <g transform="translate(-330 0) scale(3.1) translate(-50 -50)">
+  <circle cx="50" cy="50" r="46" fill="url(#g-glow)"></circle>
+  <ellipse cx="50" cy="50" rx="40" ry="14.5" fill="none" stroke="url(#g-ring)" stroke-width="1.6" transform="rotate(-24 50 50)" opacity=".85"></ellipse>
+  <path d="M50 18 Q52.4 47.6 82 50 Q52.4 52.4 50 82 Q47.6 52.4 18 50 Q47.6 47.6 50 18 Z" fill="#a98bff" opacity=".5" transform="rotate(45 50 50)"></path>
+  <path d="M50 3 Q53 47 97 50 Q53 53 50 97 Q47 53 3 50 Q47 47 50 3 Z" fill="url(#g-core)"></path>
+  <circle cx="50" cy="50" r="7" fill="#ffffff" opacity=".95"></circle>
+  <circle cx="50" cy="50" r="11.5" fill="url(#g-core)" opacity=".35"></circle>
+</g>
+  <g transform="translate(-150 0)">
+    <text x="0" y="-6" fill="url(#g-word)" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="150" letter-spacing="16">SIRIUS</text>
+    <text x="6" y="52" fill="#93a4c7" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="34" letter-spacing="15">WEB&#160;&#160;&#160;RADIO</text>
+    
+  <g>
+    <rect id="urlA-rect" x="-39.0" y="86" width="357.8" height="56" rx="28.0" fill="rgba(14,20,40,0.55)" stroke="rgba(140,170,230,0.22)"></rect>
+    <text id="urlA" x="6" y="124.1" text-anchor="start" fill="#eaf2ff" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="28" letter-spacing="3">www.siriusfm.no</text>
+  </g>
+  </g>
+  </g>
+</svg>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1640 624" width="1640" height="624" role="img" aria-label="Sirius FM – Signal">
+  <defs>
+  <radialGradient id="g-bg" cx="50%" cy="42%" r="78%">
+    <stop offset="0%" stop-color="#101d3e"></stop>
+    <stop offset="55%" stop-color="#070b1c"></stop>
+    <stop offset="100%" stop-color="#04060f"></stop>
+  </radialGradient>
+  <radialGradient id="g-core" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#ffffff"></stop><stop offset="38%" stop-color="#bfeaff"></stop>
+    <stop offset="72%" stop-color="#6fd3ff"></stop><stop offset="100%" stop-color="#a98bff"></stop>
+  </radialGradient>
+  <radialGradient id="g-glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#6fd3ff" stop-opacity=".5"></stop>
+    <stop offset="45%" stop-color="#a98bff" stop-opacity=".16"></stop>
+    <stop offset="100%" stop-color="#a98bff" stop-opacity="0"></stop>
+  </radialGradient>
+  <radialGradient id="g-halo" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#3f6bd6" stop-opacity=".38"></stop>
+    <stop offset="60%" stop-color="#2a3f8f" stop-opacity=".10"></stop>
+    <stop offset="100%" stop-color="#04060f" stop-opacity="0"></stop>
+  </radialGradient>
+  <linearGradient id="g-ring" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#6fd3ff" stop-opacity=".9"></stop>
+    <stop offset="55%" stop-color="#a98bff" stop-opacity=".45"></stop>
+    <stop offset="100%" stop-color="#6fd3ff" stop-opacity="0"></stop>
+  </linearGradient>
+  <linearGradient id="g-ring2" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#6fd3ff"></stop><stop offset="100%" stop-color="#a98bff"></stop>
+  </linearGradient>
+  <linearGradient id="g-star" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#ffffff"></stop><stop offset="50%" stop-color="#6fd3ff"></stop>
+    <stop offset="100%" stop-color="#a98bff"></stop>
+  </linearGradient>
+  <linearGradient id="g-bars" x1="0" y1="1" x2="1" y2="0">
+    <stop offset="0%" stop-color="#a98bff"></stop><stop offset="50%" stop-color="#6fd3ff"></stop>
+    <stop offset="100%" stop-color="#ffffff"></stop>
+  </linearGradient>
+  <linearGradient id="g-word" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#ffffff"></stop><stop offset="58%" stop-color="#6fd3ff"></stop>
+    <stop offset="100%" stop-color="#a98bff"></stop>
+  </linearGradient>
+  <linearGradient id="g-line" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#6fd3ff" stop-opacity="0"></stop>
+    <stop offset="50%" stop-color="#6fd3ff" stop-opacity=".55"></stop>
+    <stop offset="100%" stop-color="#a98bff" stop-opacity="0"></stop>
+  </linearGradient>
+</defs>
+  <rect width="1640" height="624" fill="url(#g-bg)"></rect>
+  <ellipse cx="820.0" cy="312" rx="689" ry="343" fill="url(#g-halo)"></ellipse>
+  <g fill="#eaf2ff"><circle cx="98" cy="112" r="2.6" opacity="0.5"></circle><circle cx="213" cy="387" r="2.0" opacity="0.35"></circle><circle cx="328" cy="175" r="1.8" opacity="0.3"></circle><circle cx="443" cy="512" r="2.4" opacity="0.4"></circle><circle cx="558" cy="75" r="1.8" opacity="0.3"></circle><circle cx="672" cy="437" r="2.0" opacity="0.32"></circle><circle cx="951" cy="125" r="2.2" opacity="0.38"></circle><circle cx="1082" cy="487" r="1.8" opacity="0.3"></circle><circle cx="1214" cy="212" r="2.6" opacity="0.45"></circle><circle cx="1328" cy="412" r="2.0" opacity="0.35"></circle><circle cx="1443" cy="137" r="1.8" opacity="0.3"></circle><circle cx="1542" cy="462" r="2.4" opacity="0.4"></circle><circle cx="787" cy="562" r="1.8" opacity="0.28"></circle><circle cx="853" cy="37" r="1.8" opacity="0.28"></circle></g>
+  <rect x="197" y="527" width="1246" height="2" fill="url(#g-line)" opacity=".5"></rect>
+  <g id="lockup" transform="translate(820.00 325.32) scale(1.0367)">
+  <g><rect x="-515" y="-121" width="400" height="2.5" rx="1.25" fill="url(#g-line)" opacity=".75"></rect><circle cx="-150" cy="-120" r="4.5" fill="#6fd3ff" opacity="0.8"></circle><circle cx="-215" cy="-120" r="3.5" fill="#6fd3ff" opacity="0.6"></circle><circle cx="-275" cy="-120" r="2.8" fill="#6fd3ff" opacity="0.45"></circle><circle cx="-330" cy="-120" r="2.2" fill="#6fd3ff" opacity="0.3"></circle><rect x="115" y="-121" width="400" height="2.5" rx="1.25" fill="url(#g-line)" opacity=".75"></rect><circle cx="150" cy="-120" r="4.5" fill="#6fd3ff" opacity="0.8"></circle><circle cx="215" cy="-120" r="3.5" fill="#6fd3ff" opacity="0.6"></circle><circle cx="275" cy="-120" r="2.8" fill="#6fd3ff" opacity="0.45"></circle><circle cx="330" cy="-120" r="2.2" fill="#6fd3ff" opacity="0.3"></circle></g>
+  <g transform="translate(0 -118) scale(1.95) translate(-50 -50)">
+  <circle cx="50" cy="50" r="34" fill="url(#g-glow)"></circle>
+  <circle cx="50" cy="50" r="46" stroke="url(#g-ring2)" stroke-width="3" fill="none"></circle>
+  <circle cx="50" cy="50" r="40" stroke="#6fd3ff" stroke-width="1" opacity=".28" fill="none"></circle>
+  <g stroke="#6fd3ff" stroke-width="3.4" stroke-linecap="round" fill="none">
+    <path d="M64 40 A 14 14 0 0 1 64 60" opacity=".95"></path>
+    <path d="M73 32 A 25 25 0 0 1 73 68" opacity=".6"></path>
+  </g>
+  <g stroke="#a98bff" stroke-width="3.4" stroke-linecap="round" fill="none">
+    <path d="M36 40 A 14 14 0 0 0 36 60" opacity=".95"></path>
+    <path d="M27 32 A 25 25 0 0 0 27 68" opacity=".6"></path>
+  </g>
+  <path d="M50 22 Q52 48 78 50 Q52 52 50 78 Q48 52 22 50 Q48 48 50 22 Z" fill="url(#g-star)"></path>
+  <circle cx="50" cy="50" r="4.6" fill="#ffffff"></circle>
+</g>
+  <text x="0" y="60" text-anchor="middle" fill="url(#g-word)" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="118" letter-spacing="18">SIRIUS</text>
+  <text x="0" y="104" text-anchor="middle" fill="#93a4c7" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="27" letter-spacing="13">WEB&#160;&#160;&#160;RADIO</text>
+  
+  <g>
+    <rect id="urlB-rect" x="-168.0" y="130" width="335.9" height="52" rx="26.0" fill="rgba(14,20,40,0.55)" stroke="rgba(140,170,230,0.22)"></rect>
+    <text id="urlB" x="0" y="165.4" text-anchor="middle" fill="#eaf2ff" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="26" letter-spacing="3">www.siriusfm.no</text>
+  </g>
+  </g>
+</svg>
