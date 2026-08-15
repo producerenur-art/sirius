@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080" fill="none" role="img" aria-label="Sirius FM">
+  <defs>
+    <radialGradient id="C-bg" cx="50%" cy="42%" r="72%">
+      <stop offset="0%"   stop-color="#141b40"/>
+      <stop offset="58%"  stop-color="#070a1c"/>
+      <stop offset="100%" stop-color="#04060f"/>
+    </radialGradient>
+    <linearGradient id="C-bars" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#a98bff"/>
+      <stop offset="50%"  stop-color="#6fd3ff"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <radialGradient id="C-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#6fd3ff" stop-opacity=".4"/>
+      <stop offset="100%" stop-color="#6fd3ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="C-word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="60%"  stop-color="#6fd3ff"/>
+      <stop offset="100%" stop-color="#a98bff"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1080" height="1080" fill="url(#C-bg)"/>
+
+  <g fill="#eaf2ff">
+    <circle cx="120" cy="180" r="2.4" opacity=".5"/><circle cx="950" cy="230" r="2" opacity=".4"/>
+    <circle cx="230" cy="900" r="2.6" opacity=".45"/><circle cx="880" cy="860" r="2.2" opacity=".4"/>
+    <circle cx="620" cy="110" r="1.8" opacity=".3"/><circle cx="150" cy="600" r="1.8" opacity=".3"/>
+  </g>
+
+  <g transform="translate(540 410) scale(3.6) translate(-50 -50)">
+    <circle cx="50" cy="50" r="44" fill="url(#C-glow)"/>
+    <g fill="url(#C-bars)">
+      <rect x="6.5"  y="39" width="9" height="22" rx="4.5" opacity=".7"/>
+      <rect x="19.5" y="30" width="9" height="40" rx="4.5" opacity=".85"/>
+      <rect x="32.5" y="19" width="9" height="62" rx="4.5"/>
+      <rect x="45.5" y="6"  width="9" height="88" rx="4.5"/>
+      <rect x="58.5" y="19" width="9" height="62" rx="4.5"/>
+      <rect x="71.5" y="30" width="9" height="40" rx="4.5" opacity=".85"/>
+      <rect x="84.5" y="39" width="9" height="22" rx="4.5" opacity=".7"/>
+    </g>
+    <path d="M50 0 Q51.4 12.6 64 14 Q51.4 15.4 50 28 Q48.6 15.4 36 14 Q48.6 12.6 50 0 Z"
+          fill="#ffffff" opacity=".92" transform="translate(45 4.2) scale(0.7)"/>
+  </g>
+
+  <text x="540" y="800" text-anchor="middle" fill="url(#C-word)"
+        font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="800"
+        font-size="132" letter-spacing="16">SIRIUS</text>
+  <text x="540" y="866" text-anchor="middle" fill="#93a4c7"
+        font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600"
+        font-size="30" letter-spacing="13">WEB&#160;&#160;&#160;RADIO</text>
+
+  <rect x="378" y="922" width="324" height="60" rx="30" fill="rgba(14,20,40,0.55)"
+        stroke="rgba(140,170,230,0.22)"/>
+  <text x="540" y="961" text-anchor="middle" fill="#eaf2ff"
+        font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600"
+        font-size="27" letter-spacing="4">siriusfm.no</text>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" role="img" aria-label="Sirius FM – Signal">
+  <defs>
+    <linearGradient id="b-star" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="50%"  stop-color="#6fd3ff"/>
+      <stop offset="100%" stop-color="#a98bff"/>
+    </linearGradient>
+    <linearGradient id="b-ring" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#6fd3ff"/>
+      <stop offset="100%" stop-color="#a98bff"/>
+    </linearGradient>
+    <radialGradient id="b-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#6fd3ff" stop-opacity=".38"/>
+      <stop offset="100%" stop-color="#6fd3ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="50" cy="50" r="34" fill="url(#b-glow)"/>
+
+  <!-- badge-ring -->
+  <circle cx="50" cy="50" r="46" stroke="url(#b-ring)" stroke-width="3"/>
+  <circle cx="50" cy="50" r="40" stroke="#6fd3ff" stroke-width="1" opacity=".28"/>
+
+  <!-- kringkastingsbuer, høyre -->
+  <g stroke="#6fd3ff" stroke-width="3.4" stroke-linecap="round" fill="none">
+    <path d="M64 40 A 14 14 0 0 1 64 60" opacity=".95"/>
+    <path d="M73 32 A 25 25 0 0 1 73 68" opacity=".6"/>
+  </g>
+  <!-- kringkastingsbuer, venstre -->
+  <g stroke="#a98bff" stroke-width="3.4" stroke-linecap="round" fill="none">
+    <path d="M36 40 A 14 14 0 0 0 36 60" opacity=".95"/>
+    <path d="M27 32 A 25 25 0 0 0 27 68" opacity=".6"/>
+  </g>
+
+  <!-- stjerne i sentrum -->
+  <path d="M50 22 Q52 48 78 50 Q52 52 50 78 Q48 52 22 50 Q48 48 50 22 Z" fill="url(#b-star)"/>
+  <circle cx="50" cy="50" r="4.6" fill="#ffffff"/>
+</svg>

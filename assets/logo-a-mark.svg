@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" role="img" aria-label="Sirius FM – Nova">
+  <defs>
+    <radialGradient id="a-core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"  stop-color="#ffffff"/>
+      <stop offset="38%" stop-color="#bfeaff"/>
+      <stop offset="72%" stop-color="#6fd3ff"/>
+      <stop offset="100%" stop-color="#a98bff"/>
+    </radialGradient>
+    <radialGradient id="a-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#6fd3ff" stop-opacity=".55"/>
+      <stop offset="45%"  stop-color="#a98bff" stop-opacity=".18"/>
+      <stop offset="100%" stop-color="#a98bff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="a-ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#6fd3ff" stop-opacity=".9"/>
+      <stop offset="55%"  stop-color="#a98bff" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#6fd3ff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- nebula-glød -->
+  <circle cx="50" cy="50" r="46" fill="url(#a-glow)"/>
+
+  <!-- orbit / signalring -->
+  <ellipse cx="50" cy="50" rx="40" ry="14.5" stroke="url(#a-ring)" stroke-width="1.6"
+           transform="rotate(-24 50 50)" opacity=".85"/>
+
+  <!-- diagonalt sekundærglimt -->
+  <path d="M50 18 Q52.4 47.6 82 50 Q52.4 52.4 50 82 Q47.6 52.4 18 50 Q47.6 47.6 50 18 Z"
+        fill="#a98bff" opacity=".5" transform="rotate(45 50 50)"/>
+
+  <!-- hovedstjerne -->
+  <path d="M50 3 Q53 47 97 50 Q53 53 50 97 Q47 53 3 50 Q47 47 50 3 Z" fill="url(#a-core)"/>
+
+  <!-- kjerne -->
+  <circle cx="50" cy="50" r="7" fill="#ffffff" opacity=".95"/>
+  <circle cx="50" cy="50" r="11.5" fill="url(#a-core)" opacity=".35"/>
+</svg>

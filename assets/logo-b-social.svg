@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080" fill="none" role="img" aria-label="Sirius FM">
+  <defs>
+    <radialGradient id="B-bg" cx="50%" cy="40%" r="72%">
+      <stop offset="0%"   stop-color="#101d3e"/>
+      <stop offset="58%"  stop-color="#070b1c"/>
+      <stop offset="100%" stop-color="#04060f"/>
+    </radialGradient>
+    <linearGradient id="B-star" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="50%"  stop-color="#6fd3ff"/>
+      <stop offset="100%" stop-color="#a98bff"/>
+    </linearGradient>
+    <linearGradient id="B-ring" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#6fd3ff"/>
+      <stop offset="100%" stop-color="#a98bff"/>
+    </linearGradient>
+    <radialGradient id="B-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#6fd3ff" stop-opacity=".38"/>
+      <stop offset="100%" stop-color="#6fd3ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="B-word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="60%"  stop-color="#6fd3ff"/>
+      <stop offset="100%" stop-color="#a98bff"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1080" height="1080" fill="url(#B-bg)"/>
+
+  <g fill="#eaf2ff">
+    <circle cx="140" cy="200" r="2.4" opacity=".5"/><circle cx="920" cy="170" r="2" opacity=".4"/>
+    <circle cx="210" cy="880" r="2.6" opacity=".45"/><circle cx="900" cy="840" r="2.2" opacity=".4"/>
+    <circle cx="560" cy="96" r="1.8" opacity=".3"/><circle cx="990" cy="520" r="1.8" opacity=".3"/>
+  </g>
+
+  <g transform="translate(540 420) scale(3.5) translate(-50 -50)">
+    <circle cx="50" cy="50" r="34" fill="url(#B-glow)"/>
+    <circle cx="50" cy="50" r="46" stroke="url(#B-ring)" stroke-width="3"/>
+    <circle cx="50" cy="50" r="40" stroke="#6fd3ff" stroke-width="1" opacity=".28"/>
+    <g stroke="#6fd3ff" stroke-width="3.4" stroke-linecap="round" fill="none">
+      <path d="M64 40 A 14 14 0 0 1 64 60" opacity=".95"/>
+      <path d="M73 32 A 25 25 0 0 1 73 68" opacity=".6"/>
+    </g>
+    <g stroke="#a98bff" stroke-width="3.4" stroke-linecap="round" fill="none">
+      <path d="M36 40 A 14 14 0 0 0 36 60" opacity=".95"/>
+      <path d="M27 32 A 25 25 0 0 0 27 68" opacity=".6"/>
+    </g>
+    <path d="M50 22 Q52 48 78 50 Q52 52 50 78 Q48 52 22 50 Q48 48 50 22 Z" fill="url(#B-star)"/>
+    <circle cx="50" cy="50" r="4.6" fill="#ffffff"/>
+  </g>
+
+  <text x="540" y="812" text-anchor="middle" fill="url(#B-word)"
+        font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="800"
+        font-size="132" letter-spacing="16">SIRIUS</text>
+  <text x="540" y="878" text-anchor="middle" fill="#93a4c7"
+        font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600"
+        font-size="30" letter-spacing="13">WEB&#160;&#160;&#160;RADIO</text>
+
+  <rect x="378" y="930" width="324" height="60" rx="30" fill="rgba(14,20,40,0.55)"
+        stroke="rgba(140,170,230,0.22)"/>
+  <text x="540" y="969" text-anchor="middle" fill="#eaf2ff"
+        font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600"
+        font-size="27" letter-spacing="4">siriusfm.no</text>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" role="img" aria-label="Sirius FM – Frekvens">
+  <defs>
+    <linearGradient id="c-bars" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#a98bff"/>
+      <stop offset="50%"  stop-color="#6fd3ff"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <radialGradient id="c-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#6fd3ff" stop-opacity=".4"/>
+      <stop offset="100%" stop-color="#6fd3ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="50" cy="50" r="44" fill="url(#c-glow)"/>
+
+  <!-- equalizer-stolper som danner en stjerne/diamant -->
+  <g fill="url(#c-bars)">
+    <rect x="6.5"  y="39"   width="9" height="22" rx="4.5" opacity=".7"/>
+    <rect x="19.5" y="30"   width="9" height="40" rx="4.5" opacity=".85"/>
+    <rect x="32.5" y="19"   width="9" height="62" rx="4.5"/>
+    <rect x="45.5" y="6"    width="9" height="88" rx="4.5"/>
+    <rect x="58.5" y="19"   width="9" height="62" rx="4.5"/>
+    <rect x="71.5" y="30"   width="9" height="40" rx="4.5" opacity=".85"/>
+    <rect x="84.5" y="39"   width="9" height="22" rx="4.5" opacity=".7"/>
+  </g>
+
+  <!-- lite glimt øverst til høyre -->
+  <path d="M50 0 Q51.4 12.6 64 14 Q51.4 15.4 50 28 Q48.6 15.4 36 14 Q48.6 12.6 50 0 Z"
+        fill="#ffffff" opacity=".92" transform="translate(45 4.2) scale(0.7)"/>
+</svg>
